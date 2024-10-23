@@ -4,6 +4,8 @@ import { AProposComponent } from './a-propos/a-propos.component';
 import { ContactComponent } from './contact/contact.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { AuthGuard } from './auth.guard';
+import { AccountComponent } from './account/account.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -11,6 +13,7 @@ export const routes: Routes = [
     { path: 'log-in', component: LogInComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'contact', component: ContactComponent },
+    { path: 'account', component: AccountComponent, canActivate:[AuthGuard] },
     { path: '', redirectTo: '/home', pathMatch: 'full' }
   ];
   

@@ -13,11 +13,12 @@ import { FormsModule } from '@angular/forms'; // Add this line
 export class SignUpComponent {
   email: string = '';
   password: string = '';
+  username: string = '';
 
   constructor(private http: HttpClient) {}
 
   onSubmit() {
-    const user = { email: this.email, password: this.password };
+    const user = { email: this.email, password: this.password, username: this.username };
     console.log(user);
     this.http.post('http://localhost:5000/api/auth/register', user)
       .subscribe(response => {

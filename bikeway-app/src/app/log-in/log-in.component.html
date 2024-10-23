@@ -1,33 +1,19 @@
-
-
-    <div class="container login-container">
-            <article class="grid articled">
-                    
-                    <div id="image-login">         
-                    </div> 
-                    <div >
-                            <hgroup>
-                                    <h4>Connection</h4>
-                                    <h5>Accedez à votre compte BikeWay</h5>
-                            </hgroup>
-                            <form>
-                                    <label>Mail :</label>
-                                    <input type="mail" placeholder="Entrez votre mail" name="mail" #mail required>
-                                    <label>Mot de passe: </label>
-                                    <input type="password" placeholder="Entrez votre mot de passe" name="password" #password required>
-                                    <div class="container button-container">
-                                        <button type="button">
-                                            Se connecter
-                                        </button>
-                                        <a class="menu-page" routerLink="/sign-up">S'inscrire</a>
-
-                                    </div>
-                                   
-                                        <a href="#"> Mot de passe oublié? </a>
-                            </form>
-                    </div>
-                   
-            </article>
-    </div>
-
-
+<div class="container">
+        <article class="grid customedArticle">
+                <div class="loginContainer">
+                        <h1>Connexion</h1>
+                        <p>Mail :</p>
+                        <input type="email" [(ngModel)]="email" placeholder="Enter mail" required>
+                        <p>Mot de passe :</p>
+                        <input type="password" [(ngModel)]="password" placeholder="Enter Password" required>
+                        <div class="grid">
+                                <button class="signUpInput" type="button" (click)="onLogin()">
+                                        Se connecter
+                                </button>
+                                <a class="signUpInput" routerLink="/sign-up">
+                                        S'inscrire
+                                </a>
+                        </div>
+                </div>
+        </article>
+</div>

@@ -1,0 +1,22 @@
+  <div class="container autom">
+    <div class="row" *ngIf="user">
+      <div class="test">
+        <article class="centerLink">
+          <header>
+            <h2>
+              Bonjour,<div class="nomEmail bold col"> {{user.username}}</div>
+            </h2>
+          </header>
+  
+          <p class="grey">Il n'y pas d'actualités sur votre compte</p>
+          <a class="" (click)="logout()">Déconnection</a>
+        </article>
+        <article class="inline artic">
+          <header>
+            <h2>Vos Voyages</h2>
+          </header>
+          
+        </article>
+      </div>
+    </div>
+  </div>
