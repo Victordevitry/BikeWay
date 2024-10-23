@@ -1,0 +1,21 @@
+.brand-logo:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.brand-logo{
+     width: 200px;
+
+}
+
+
+.menu-page{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.menu-user:hover{
+    text-decoration: none;
+    cursor: pointer;
+}

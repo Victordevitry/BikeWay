@@ -1,0 +1,57 @@
+.routesSearchField{
+    vertical-align: middle;    
+}
+
+.map{
+    margin:auto;
+    padding: 0;
+}
+
+.positionSwitch{
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.invi{
+    color:transparent;
+}
+
+#map {
+    position: relative;
+  max-height: 500px;
+ 
+  min-height: 45vw;
+ width: 100%;
+ height: 100%;
+  margin: auto;
+}
+
+.inp{
+margin-top: 5%;
+}
+
+
+.icons-search:hover{
+    cursor: pointer;
+}
+
+.pointer:hover{
+    cursor:pointer;
+}
+
+.validation{
+    margin: auto;
+    text-align: center;
+    margin-top:20px;
+    
+}
+
+.icons-search{
+    position: relative;
+    margin:auto;
+    vertical-align: middle;
+}
+
+.inline{
+    display: flex;
+}

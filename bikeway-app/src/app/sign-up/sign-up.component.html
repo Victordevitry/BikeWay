@@ -1,0 +1,23 @@
+<div class="container">
+    <article class="grid customedArticle">
+        <div class="loginContainer">
+            <h1>Inscription</h1>
+            <h5>Accedez à tous les services de BikeWay</h5>
+            <p>Mail :</p>
+            <input type="email" [(ngModel)]="email" placeholder="Enter mail" name="mail" required>
+            <p>Mot de passe :</p>
+            <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="password" required>
+            <div class="container">
+                <input type="checkbox" id="terms" name="terms" required>
+                <a href="https://cdn.axway.com/u/Axway_General_Conditions_version_april_2014_eng%20(France).pdf">Accepter
+                    les CGU</a>
+            </div>
+            <div class="grid">
+                <button class="signUpInput" type="button" (click)="onSubmit()">
+                    S'inscrire
+                </button>
+                <input class="signUpInput" type="reset" value="Annuler">
+            </div>
+        </div>
+    </article>
+</div>

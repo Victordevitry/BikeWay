@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <div class="container routesSearchField grid">
+        <div class="container-fluid inp">
+            <p>Adresse de départ</p>
+            <input type="text" id="start-adress" placeholder="Paris" />
+            <p>Utiliser ma position <input class="searchInput" type="checkbox" id="switch" name="switch" role="switch" (change)="toggleLocation()"></p>
+        </div>
+        <div class="container-fluid inp">
+            <p>Adresse d'arrivé</p>
+            <input placeholder="Orléans" id="end-adress" type="text" />
+        </div>
+        <div class="grid inline">
+            <a id="search-route" class="icons-search"><img
+                    src="https://img.icons8.com/color/48/null/cycling-road--v1.png" /></a>
+
+            <a class="icons-search" >
+                <div>
+                    <img src="https://img.icons8.com/color/48/null/filled-star--v1.png" />
+                </div>
+            </a>
+            <a class="icons-search"><img
+                    src="https://img.icons8.com/external-filled-color-icons-papa-vector/78/null/external-Bicycle-Sharing-System-car-sharing-filled-color-icons-papa-vector.png" /></a>
+        </div>
+    </div>
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+</div>
