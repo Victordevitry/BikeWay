@@ -1,20 +1,25 @@
 <div class="container-fluid">
     <nav>
-        <ul>
-            <li>
-                <strong> 
-                    <a routerLink="/home"><img class="brand-logo" src="assets/images/logo-white-transparent.png" />
-                    </a>
-                </strong>
-            </li>
-            <li>
-                <a class="menu-page" routerLink="/a-propos">A propos</a>
-            </li>
-        </ul>
-        <ul>
-            <li><a class="menu-user" routerLink="/log-in">Connexion</a></li>
-            <li><a class="menu-user" routerLink="/account">Compte</a></li>
-
-        </ul>
+      <ul>
+        <li>
+          <strong>
+            <a routerLink="/home">
+              <img class="brand-logo" src="assets/images/logo-white-transparent.png" />
+            </a>
+          </strong>
+        </li>
+        <li>
+          <a class="menu-page" routerLink="/a-propos">A propos</a>
+        </li>
+      </ul>
+      <ul>
+        <li *ngIf="!isLoggedIn">
+          <a class="menu-user" routerLink="/log-in">Connexion</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+          <a class="menu-user" routerLink="/account">Compte</a>
+        </li>
+      </ul>
     </nav>
-</div>
+  </div>
+  

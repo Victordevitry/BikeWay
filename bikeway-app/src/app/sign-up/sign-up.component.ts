@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // Add this line
+import { Router } from '@angular/router'; // Add this line
 
 @Component({
   selector: 'app-sign-up',
@@ -15,14 +16,20 @@ export class SignUpComponent {
   password: string = '';
   username: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {} // Inject Router
 
   onSubmit() {
     const user = { email: this.email, password: this.password, username: this.username };
-    console.log(user);
+    
     this.http.post('http://localhost:5000/api/user/register', user)
       .subscribe(response => {
         console.log('User created:', response);
+        
+        // Save user data to localStorage (or any other method) to simulate login
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        // Redirect to the home page
+        this.router.navigate(['/home']);
       }, error => {
         console.error('Error creating user:', error);
       });
