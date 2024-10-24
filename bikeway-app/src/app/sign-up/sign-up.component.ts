@@ -20,7 +20,7 @@ export class SignUpComponent {
   onSubmit() {
     const user = { email: this.email, password: this.password, username: this.username };
     console.log(user);
-    this.http.post('http://localhost:5000/api/auth/register', user)
+    this.http.post('http://localhost:5000/api/user/register', user)
       .subscribe(response => {
         console.log('User created:', response);
       }, error => {

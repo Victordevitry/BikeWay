@@ -20,7 +20,7 @@ export class LogInComponent {
 
   onLogin() {
     const user = { email: this.email, password: this.password };
-    this.http.post<any>('http://localhost:5000/api/auth/login', user)
+    this.http.post<any>('http://localhost:5000/api/user/login', user)
       .subscribe(response => {
         console.log('Login successful:', response);
         localStorage.setItem('user', JSON.stringify(response.user));

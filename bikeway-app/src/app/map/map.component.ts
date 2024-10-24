@@ -21,6 +21,7 @@ export class MapComponent implements AfterViewInit {
   directionsRenderer: any;
   geocoder: any;
   user:any;
+  bikeStations: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -51,6 +52,48 @@ export class MapComponent implements AfterViewInit {
     searchButton?.addEventListener('click', () => this.calculateRoute());
   }
 
+  // New method to get nearby bike stations
+  getNearbyBikeStations(): void {
+    const bounds = this.map.getBounds(); // Get the current map bounds
+
+    if (!bounds) {
+        console.error('Bounds not available');
+        return;
+    }
+
+    const request = {
+      bounds: bounds,  // Use the current map bounds instead of a fixed radius
+      keyword: 'bike rental',  // This will search for places that match the keyword
+    };
+
+    const service = new google.maps.places.PlacesService(this.map);
+    service.nearbySearch(request, (results: any, status: any, pagination: any) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+       this.bikeStations = results;
+       this.displayBikeStations();
+       
+       // Check if there are more results to load
+       if (pagination.hasNextPage) {
+           setTimeout(() => pagination.nextPage(), 1000); // Delay to avoid quota limit issues
+       }
+   } else {
+        console.error('Failed to fetch bike stations:', status);
+      }
+    });
+  }
+
+  // Method to display bike stations on the map
+  displayBikeStations(): void {
+    this.bikeStations.forEach((station) => {
+      if (station.geometry && station.geometry.location) {
+        new google.maps.Marker({
+          position: station.geometry.location,
+          map: this.map,
+          title: station.name,
+        });
+      }
+    });
+  }
 
   calculateRoute(): void {
     const start = (document.getElementById("start-adress") as HTMLInputElement).value;

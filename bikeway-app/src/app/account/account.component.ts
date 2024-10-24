@@ -46,6 +46,21 @@ export class AccountComponent {
     );
   }
 
+  deleteAccount(): void {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      this.http.delete(`http://localhost:5000/api/user/delete/${this.user.email}`).subscribe(
+        () => {
+          console.log('Compte et itinéraires supprimés avec succès');
+          localStorage.removeItem('user'); // Remove user data from local storage
+          this.router.navigate(['/log-in']); // Redirect to the login page
+        },
+        (error) => {
+          console.error('Erreur lors de la suppression du compte :', error);
+        }
+      );
+    }
+  }
+
   logout() {
     localStorage.removeItem('user'); // Remove user data from local storage
     this.router.navigate(['/log-in']); // Redirect to the login page
