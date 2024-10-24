@@ -15,8 +15,27 @@
           <header>
             <h2>Vos Voyages</h2>
           </header>
-          
+          <div *ngIf="bikeRoutes.length > 0; else noRoutes">
+            <ul>
+              <li *ngFor="let route of bikeRoutes">
+                <strong>De :</strong> {{ route.origin }} <br>
+                <strong>À :</strong> {{ route.destination }} <br>
+                <strong>Enregistré le :</strong> {{ route.createdAt | date:'medium' }}
+                <a [routerLink]="['/home']" [queryParams]="{ origin: route.origin, destination: route.destination }">
+                  Voir l'itinéraire
+                </a>
+                <a (click)="deleteRoute(route._id)">
+                  Supprimer
+                </a>
+
+              </li>
+            </ul>
+          </div>
+          <ng-template #noRoutes>
+            <p class="grey">Vous n'avez pas encore enregistré d'itinéraires.</p>
+          </ng-template>
         </article>
+        
       </div>
     </div>
   </div>

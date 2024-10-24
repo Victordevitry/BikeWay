@@ -1,58 +1,45 @@
 import { Component, AfterViewInit  } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { Input } from '@angular/core';
 
 declare var google: any;
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [],
+  imports: [HttpClientModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
 export class MapComponent implements AfterViewInit {
+  @Input() origin!: string;
+  @Input() destination!: string;
 
   map: any;
   directionsService: any;
   directionsRenderer: any;
   geocoder: any;
+  user:any;
+
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit(): void {
     this.initMap();
+    if (this.origin && this.destination) {
+      this.showRouteFromSavedItinerary(this.origin,this.destination);    
+    }
   }
 
   initMap(): void {
-    const map = new google.maps.Map(document.getElementById("map"), {
+    this.map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 41.3851, lng: 2.1734 }, 
       zoom: 12, 
-      styles: [
-        {
-          featureType: "all",
-          elementType: "geometry",
-          stylers: [{ visibility: "off" }]
-        },
-        {
-          featureType: "transit",
-          stylers: [{ visibility: "off" }]
-        },
-        {
-          featureType: "water",
-          stylers: [{ visibility: "on" }]
-        },
-        {
-          featureType: "landscape",
-          stylers: [{ visibility: "on" }]
-        },
-        {
-          featureType: "road",
-          elementType: "geometry",
-          stylers: [{ visibility: "on" }]
-        }
-      ]
     });
     this.geocoder = new google.maps.Geocoder();
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer();
-    this.directionsRenderer.setMap(map);
+    this.directionsRenderer.setMap(this.map);
 
     const startInput = document.getElementById("start-adress") as HTMLInputElement;
     const endInput = document.getElementById("end-adress") as HTMLInputElement;
@@ -84,6 +71,25 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  showRouteFromSavedItinerary(start:String,end:String): void {
+    const request = {
+      origin: start,
+      destination: end,
+      travelMode: google.maps.TravelMode.BICYCLING,
+    };
+
+    this.directionsService.route(request, (result: any, status: any) => {
+      if (status === 'OK') {
+        this.directionsRenderer.setDirections(result);
+        (document.getElementById("start-adress") as HTMLInputElement).value = start.toString();
+        (document.getElementById("end-adress") as HTMLInputElement).value = end.toString();
+
+      } else {
+        console.error('Error fetching directions', result);
+      }
+    });
+  }
+
   toggleLocation(): void {
     const switchElement = document.getElementById("switch") as HTMLInputElement;
     if (switchElement.checked) {
@@ -91,6 +97,8 @@ export class MapComponent implements AfterViewInit {
         navigator.geolocation.getCurrentPosition((position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
+          this.map.setCenter({ lat, lng });
+
           this.geocoder.geocode({ location: { lat, lng } }, (results: { formatted_address: string; }[], status: string) => {
             if (status === 'OK' && results[0]) {
               (document.getElementById("start-adress") as HTMLInputElement).value = results[0].formatted_address;
@@ -108,5 +116,39 @@ export class MapComponent implements AfterViewInit {
       (document.getElementById("start-adress") as HTMLInputElement).value = '';
     }
   }
+
+
+  saveRoute(): void {
+    const start = (document.getElementById("start-adress") as HTMLInputElement).value;
+    const end = (document.getElementById("end-adress") as HTMLInputElement).value;
+  
+    if (!start || !end) {
+      console.error('Les champs d\'adresse de départ ou d\'arrivée sont vides.');
+      return;
+    }
+  
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData);
+    }else{
+      console.log("user non trouvé, pas connecté?")
+      return;
+    }
+  
+    const route = {
+      origin: start,
+      destination: end,
+      userEmail: this.user.email, // Utilisation de l'email au lieu de l'ID
+    };
+  
+    this.http.post('http://localhost:5000/api/routes/save', route)
+      .subscribe(response => {
+        console.log('Itinéraire enregistré avec succès !', response);
+      }, error => {
+        console.error('Erreur lors de l\'enregistrement de l\'itinéraire :', error);
+      });
+  }
+  
+  
 
 }

@@ -10,16 +10,16 @@
             <input placeholder="Orléans" id="end-adress" type="text" />
         </div>
         <div class="grid inline">
-            <a id="search-route" class="icons-search"><img
-                    src="https://img.icons8.com/color/48/null/cycling-road--v1.png" /></a>
-
-            <a class="icons-search" >
-                <div>
-                    <img src="https://img.icons8.com/color/48/null/filled-star--v1.png" />
-                </div>
+            <a id="search-route" class="icons-search">
+                Show route
             </a>
-            <a class="icons-search"><img
-                    src="https://img.icons8.com/external-filled-color-icons-papa-vector/78/null/external-Bicycle-Sharing-System-car-sharing-filled-color-icons-papa-vector.png" /></a>
+
+            <a class="icons-search" (click)="saveRoute()">
+                Save route
+            </a>
+            <a class="icons-search">
+                Show nearby bike rentals
+            </a>
         </div>
     </div>
     <div class="map-container">

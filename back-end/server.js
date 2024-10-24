@@ -19,3 +19,7 @@ app.listen(PORT, () => {
 const authRoutes = require('./routes/auth'); // Adjust the path as needed
 
 app.use('/api/auth', authRoutes);
+
+const bikeRoutes = require('./routes/user-routes'); // Adjust the path as needed
+
+app.use('/api/routes', bikeRoutes);
