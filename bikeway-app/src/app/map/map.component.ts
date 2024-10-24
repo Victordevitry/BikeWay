@@ -1,7 +1,8 @@
-import { Component, AfterViewInit  } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Input } from '@angular/core';
+import { ThemeService } from '../theme-service.service';
 
 declare var google: any;
 
@@ -20,22 +21,49 @@ export class MapComponent implements AfterViewInit {
   directionsService: any;
   directionsRenderer: any;
   geocoder: any;
-  user:any;
+  user: any;
   bikeStations: any[] = [];
-
-  constructor(private http: HttpClient) {}
+  lightMapStyles: any = [
+    { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#444444" }] },
+    { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] },
+    { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] },
+    { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] },
+    { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] },
+    { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
+    { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] },
+    { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#46bcec" }, { "visibility": "on" }] }
+  ];
+  
+  darkMapStyles: any = [
+    { "featureType": "all", "elementType": "all", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": -30 }] },
+    { "featureType": "all", "elementType": "labels.text.fill", "stylers": [{ "color": "#ffffff" }] },
+    { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "color": "#353535" }] },
+    { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "color": "#656565" }] },
+    { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "color": "#505050" }] },
+    { "featureType": "poi", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }] },
+    { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#454545" }] },
+    { "featureType": "transit", "elementType": "labels", "stylers": [{ "hue": "#000000" }, { "saturation": 100 }, { "lightness": -40 }, { "invert_lightness": true }, { "gamma": 1.5 }] }
+  ];
+  
+  constructor(private http: HttpClient, private themeService: ThemeService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
+
+    // Subscribe to theme changes
+    this.themeService.theme$.subscribe(theme => {
+      this.setMapStyle(theme);
+    });
+
     if (this.origin && this.destination) {
-      this.showRouteFromSavedItinerary(this.origin,this.destination);    
+      this.showRouteFromSavedItinerary(this.origin, this.destination);
     }
   }
 
   initMap(): void {
     this.map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 41.3851, lng: 2.1734 }, 
-      zoom: 12, 
+      center: { lat: 41.3851, lng: 2.1734 },
+      zoom: 12,
     });
     this.geocoder = new google.maps.Geocoder();
     this.directionsService = new google.maps.DirectionsService();
@@ -50,6 +78,15 @@ export class MapComponent implements AfterViewInit {
 
     const searchButton = document.getElementById('search-route');
     searchButton?.addEventListener('click', () => this.calculateRoute());
+
+    // Set initial style based on the current theme
+    this.setMapStyle(this.themeService.getTheme());
+
+  }
+
+  setMapStyle(theme: string): void {
+    const styles = theme === 'dark' ? this.darkMapStyles : this.lightMapStyles;
+    this.map.setOptions({ styles });
   }
 
   // New method to get nearby bike stations
@@ -57,8 +94,8 @@ export class MapComponent implements AfterViewInit {
     const bounds = this.map.getBounds(); // Get the current map bounds
 
     if (!bounds) {
-        console.error('Bounds not available');
-        return;
+      console.error('Bounds not available');
+      return;
     }
 
     const request = {
@@ -69,14 +106,14 @@ export class MapComponent implements AfterViewInit {
     const service = new google.maps.places.PlacesService(this.map);
     service.nearbySearch(request, (results: any, status: any, pagination: any) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-       this.bikeStations = results;
-       this.displayBikeStations();
-       
-       // Check if there are more results to load
-       if (pagination.hasNextPage) {
-           setTimeout(() => pagination.nextPage(), 1000); // Delay to avoid quota limit issues
-       }
-   } else {
+        this.bikeStations = results;
+        this.displayBikeStations();
+
+        // Check if there are more results to load
+        if (pagination.hasNextPage) {
+          setTimeout(() => pagination.nextPage(), 1000); // Delay to avoid quota limit issues
+        }
+      } else {
         console.error('Failed to fetch bike stations:', status);
       }
     });
@@ -114,7 +151,7 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  showRouteFromSavedItinerary(start:String,end:String): void {
+  showRouteFromSavedItinerary(start: String, end: String): void {
     const request = {
       origin: start,
       destination: end,
@@ -164,26 +201,26 @@ export class MapComponent implements AfterViewInit {
   saveRoute(): void {
     const start = (document.getElementById("start-adress") as HTMLInputElement).value;
     const end = (document.getElementById("end-adress") as HTMLInputElement).value;
-  
+
     if (!start || !end) {
       console.error('Les champs d\'adresse de départ ou d\'arrivée sont vides.');
       return;
     }
-  
+
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
-    }else{
+    } else {
       console.log("user non trouvé, pas connecté?")
       return;
     }
-  
+
     const route = {
       origin: start,
       destination: end,
       userEmail: this.user.email, // Utilisation de l'email au lieu de l'ID
     };
-  
+
     this.http.post('http://localhost:5000/api/routes/save', route)
       .subscribe(response => {
         console.log('Itinéraire enregistré avec succès !', response);
@@ -191,7 +228,7 @@ export class MapComponent implements AfterViewInit {
         console.error('Erreur lors de l\'enregistrement de l\'itinéraire :', error);
       });
   }
-  
-  
+
+
 
 }

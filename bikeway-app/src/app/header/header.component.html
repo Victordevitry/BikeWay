@@ -4,7 +4,7 @@
         <li>
           <strong>
             <a routerLink="/home">
-              <img class="brand-logo" src="assets/images/logo-white-transparent.png" />
+              <img class="brand-logo" [src]="isDarkTheme ? 'assets/images/logo-white-transparent.png' : 'assets/images/logo-dark.png'" />
             </a>
           </strong>
         </li>

@@ -12,6 +12,8 @@
           <a class="" (click)="logout()">Déconnection</a>
           <br>
           <a (click)="deleteAccount()">Supprimer mon compte</a>
+          <br>
+          <label for="switch">Thème sombre </label> <input class="" [checked]="isDarkTheme" type="checkbox" id="switch" name="switch" role="switch" (change)="switchTheme()">
         </article>
         <article class="inline artic">
           <header>

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ThemeService } from '../theme-service.service';
+
 
 @Component({
   selector: 'app-account',
@@ -15,8 +17,9 @@ import { RouterModule } from '@angular/router';
 export class AccountComponent {
   user: any;
   bikeRoutes: any[] = [];
+  isDarkTheme: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,private themeService: ThemeService) {}
 
   ngOnInit() {
     const userData = localStorage.getItem('user');
@@ -24,6 +27,13 @@ export class AccountComponent {
       this.user = JSON.parse(userData);
       this.fetchBikeRoutes(this.user.email);
     }
+    this.isDarkTheme = this.themeService.getTheme() === 'dark'; // Set switch state based on theme
+
+  }
+
+  switchTheme() {
+    this.themeService.toggleTheme();
+    this.isDarkTheme = !this.isDarkTheme; // Update the switch state
   }
 
   fetchBikeRoutes(email: string) {
