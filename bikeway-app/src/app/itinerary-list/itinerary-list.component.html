@@ -1,30 +1,26 @@
-<div class="container">
-    <h2>Itinéraires à Vélo</h2>
+<div class="container" style="margin-top:20px;">
     <div style="display:flex;flex-direction: row;align-items: center;">
-        <label for="city-select">Sélectionnez une ville:</label>
+        <label for="city-select">Select a city:</label>
         <select id="city-select" (change)="onCityChange($event)" class="city-select" style="margin-left:5%">
             <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
         </select>
     </div>
     <div *ngIf="selectedRoutes.length > 0" class="route-list">
-        <h3>Itinéraires pour {{ selectedCity }}:</h3>
+        <h3>Routes for {{ selectedCity }}:</h3>
         <ul>
             <li *ngFor="let route of selectedRoutes" class="route-item">
                 <div style="display: flex;align-items: center;">
                     <div style="width: 100%;">
                         <h4 class="route-title">{{ route.title }}</h4>
-                        <strong>Départ:</strong> <span class="route-departure">{{ route.departure }}</span><br>
-                        <strong>Arrivée:</strong> <span class="route-arrival">{{ route.arrival }}</span><br>
+                        <strong>Departure : </strong> <span class="route-departure">{{ route.departure }}</span><br>
+                        <strong>Arrival : </strong> <span class="route-arrival">{{ route.arrival }}</span><br>
                         <p>{{ route.description }}</p>
                         <a [routerLink]="['/home']" [queryParams]="{ origin: route.departure, destination: route.arrival }" class="route-link">
-                            Voir l'itinéraire sur la carte
+                            View route on the map
                         </a>
                     </div>
                     <img [src]="route.image" alt="{{ route.title }}" class="fixed-size-image" />
-
                 </div>
-               
-
             </li>
         </ul>
     </div>

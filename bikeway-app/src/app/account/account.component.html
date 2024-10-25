@@ -1,55 +1,62 @@
-  <div class="container autom">
-    <div class="row" *ngIf="user">
-      <div class="test">
-        <article class="centerLink">
-          <header>
-            <h2>
-              Bonjour,<div class="nomEmail bold col"> {{user.username}}</div>
-            </h2>
-          </header>
-  
-          <p class="grey">Il n'y pas d'actualités sur votre compte</p>
-          <a class="" (click)="logout()">Déconnection</a>
-          <br>
-          <a (click)="deleteAccount()">Supprimer mon compte</a>
-          <br>
-        </article>
-        <article class="inline artic">
-          <header>
-            <h2>Vos Voyages</h2>
-          </header>
-          <div *ngIf="bikeRoutes.length > 0; else noRoutes">
-            <ul>
-              <li *ngFor="let route of bikeRoutes">
-                <strong>De :</strong> {{ route.origin }} <br>
-                <strong>À :</strong> {{ route.destination }} <br>
-                <strong>Enregistré le :</strong> {{ route.createdAt | date:'medium' }}
-                <a [routerLink]="['/home']" [queryParams]="{ origin: route.origin, destination: route.destination }">
-                  Voir l'itinéraire
-                </a>
-                <a (click)="deleteRoute(route._id)">
-                  Supprimer
-                </a>
-                
-                <!-- Star Rating -->
-                <div class="star-rating">
-                  <span *ngFor="let star of [1, 2, 3, 4, 5]"
-                        (click)="setRating(route._id, star)"
-                        (mouseenter)="setHoveredRating(route._id, star)"
-                        (mouseleave)="clearHoveredRating(route._id)"
-                        [class.filled]="star <= (hoveredRatings[route._id] || ratings[route._id])">
-                    ★
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          
-          <ng-template #noRoutes>
-            <p class="grey">Vous n'avez pas encore enregistré d'itinéraires.</p>
-          </ng-template>
-        </article>
+<div class="container" style="margin-top:40px;">
+  <div class="row" *ngIf="user">
+    <div >
+      <article style="width:80%;margin:auto">
+        <header >
+          <h2>
+            Hello, <div style="display: inline-block;"> {{user.username}}</div>
+          </h2>
+         
+        </header>
+
+        <p class="grey">There is no news on your account</p>
+        <div class="flex-row">
+          <a class="account-buttons" (click)="logout()">Log out</a>
+          <a class="account-buttons" (click)="deleteAccount()">Delete my account</a>
+        </div>
         
-      </div>
+      </article>
+      <article  style="width:80%;margin:auto;margin-top:3%;margin-bottom:1.5%;">
+        <header>
+          <h2>Your Trips</h2>
+        </header>
+        <div *ngIf="bikeRoutes.length > 0; else noRoutes">
+          <ul>
+            <li *ngFor="let route of bikeRoutes">
+              <div class="flex-row" style="justify-content: space-between;margin-top:10px">
+                <div>
+                  <strong>From:</strong> {{ route.origin }} <br>
+                  <strong>To:</strong> {{ route.destination }} <br>
+                  <strong>Saved on:</strong> {{ route.createdAt | date:'medium' }}
+                </div>
+                <div>
+                  <div class="star-rating">
+                    <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                          (click)="setRating(route._id, star)"
+                          (mouseenter)="setHoveredRating(route._id, star)"
+                          (mouseleave)="clearHoveredRating(route._id)"
+                          [class.filled]="star <= (hoveredRatings[route._id] || ratings[route._id])">
+                      ★
+                    </span>
+                  </div>
+                  <a class="account-buttons" [routerLink]="['/home']" [queryParams]="{ origin: route.origin, destination: route.destination }">
+                    View route
+                  </a>
+                  <br>
+                  <a class="account-buttons" (click)="deleteRoute(route._id)">
+                    Delete
+                  </a>
+                </div>
+              </div>      
+            </li>
+          </ul>
+        </div>
+        
+        <ng-template #noRoutes>
+          <p class="grey">You haven't saved any routes yet.</p>
+        </ng-template>
+      </article>
+      
     </div>
   </div>
+</div>

@@ -12,11 +12,11 @@
     margin-bottom: 100px;
 }
 
-.margin{   
+.margin-flex{   
     margin-top: 5%;
     margin-bottom: 5%;
-}
-
-.paragraphs{
-    font-size:16px !important;
+    display: flex;
+    align-items: center ;
+    align-content: center;
+    justify-content: center;
 }

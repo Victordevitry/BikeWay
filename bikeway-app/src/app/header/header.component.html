@@ -12,20 +12,20 @@
         <a class="menu-page" routerLink="/itinerary-list">Famous itineraries</a>
       </li>
       <li>
-        <a class="menu-page" routerLink="/a-propos">A propos</a>
+        <a class="menu-page" routerLink="/a-propos">About us</a>
       </li>
     </ul>
     <ul>
       <li>
-        <button (click)="toggleTheme()">
+        <button (click)="toggleTheme()" class="theme-button">
           {{ isDarkTheme ? '🌞' : '🌙' }}
         </button>
       </li>
       <li *ngIf="!isLoggedIn">
-        <a class="menu-user" routerLink="/log-in">Connexion</a>
+        <a class="menu-user" routerLink="/log-in">Log in</a>
       </li>
       <li *ngIf="isLoggedIn">
-        <a class="menu-user" routerLink="/account">Compte</a>
+        <a class="menu-user" routerLink="/account">Account</a>
       </li>
     </ul>
   </nav>

@@ -22,7 +22,7 @@
 }
 
 .route-item:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
 }
 
 .route-title {
@@ -30,10 +30,7 @@
     color: #007bff;
 }
 
-.route-departure,
-.route-arrival {
-    font-weight: bold;
-}
+
 
 .route-link {
     display: inline-block;

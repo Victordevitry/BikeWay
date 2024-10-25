@@ -2,6 +2,11 @@
     vertical-align: middle;    
 }
 
+.icons-search{
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .map{
     margin:auto;
     padding: 0;
