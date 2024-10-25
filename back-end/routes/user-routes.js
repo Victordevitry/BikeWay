@@ -27,6 +27,32 @@ router.get('/:userEmail', async (req, res) => {
     }
 });
 
+router.put('/rate/:id', async (req, res) => {
+    const { id } = req.params;
+    const { rating } = req.body;
+  
+    if (rating < 1 || rating > 5) {
+      return res.status(400).send({ message: 'La note doit être entre 1 et 5' });
+    }
+  
+    try {
+      const route = await BikeRoute.findByIdAndUpdate(
+        id,
+        { rating },
+        { new: true } // Return the updated document
+      );
+  
+      if (!route) {
+        return res.status(404).send({ message: 'Itinéraire non trouvé' });
+      }
+  
+      res.status(200).send(route);
+    } catch (error) {
+      res.status(500).send({ message: 'Erreur lors de la mise à jour de la note', error });
+    }
+  });
+  
+
 router.delete('/delete/:id', async (req, res) => {
     const routeId = req.params.id;
   

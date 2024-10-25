@@ -9,7 +9,7 @@ import { ThemeService } from '../theme-service.service';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements AfterViewInit {
   isLoggedIn: boolean = false;
@@ -18,7 +18,7 @@ export class HeaderComponent implements AfterViewInit {
   constructor(private router: Router, private cdr: ChangeDetectorRef, private themeService: ThemeService) {}
 
   ngAfterViewInit(): void {
-    this.isDarkTheme = this.themeService.getTheme() === 'dark'; // Set dark theme state
+    this.isDarkTheme = this.themeService.getTheme() === 'dark'; // Set initial theme state
     this.checkLoginStatus();
 
     // Listen to theme changes
@@ -31,6 +31,10 @@ export class HeaderComponent implements AfterViewInit {
     this.router.events.subscribe(() => {
       this.checkLoginStatus();
     });
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   checkLoginStatus(): void {

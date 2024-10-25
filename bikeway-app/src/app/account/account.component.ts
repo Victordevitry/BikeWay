@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ThemeService } from '../theme-service.service';
 
 
 @Component({
@@ -17,9 +16,10 @@ import { ThemeService } from '../theme-service.service';
 export class AccountComponent {
   user: any;
   bikeRoutes: any[] = [];
-  isDarkTheme: boolean = false;
+  ratings: { [key: string]: number } = {}; // Store ratings by route ID
+  hoveredRatings: { [key: string]: number } = {}; // Store hovered ratings by route ID
 
-  constructor(private http: HttpClient, private router: Router,private themeService: ThemeService) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     const userData = localStorage.getItem('user');
@@ -27,23 +27,58 @@ export class AccountComponent {
       this.user = JSON.parse(userData);
       this.fetchBikeRoutes(this.user.email);
     }
-    this.isDarkTheme = this.themeService.getTheme() === 'dark'; // Set switch state based on theme
 
   }
 
-  switchTheme() {
-    this.themeService.toggleTheme();
-    this.isDarkTheme = !this.isDarkTheme; // Update the switch state
+  setRating(routeId: string, rating: number): void {
+    this.ratings[routeId] = rating; // Store the rating locally for UI updates
+  
+    // Find the route object in the bikeRoutes array
+    const route = this.bikeRoutes.find(r => r._id === routeId);
+    
+    // Call rateRoute if the route was found
+    if (route) {
+      this.rateRoute(route, rating);
+    } else {
+      console.error('Route not found');
+    }
   }
+  
+
+  setHoveredRating(routeId: string, rating: number): void {
+    this.hoveredRatings[routeId] = rating; // Ensure `hoveredRatings` uses routeId as the key
+  }
+
+  clearHoveredRating(routeId: string): void {
+    this.hoveredRatings[routeId] = 0;
+  }
+
+  rateRoute(route: any, rating: number): void {
+    route.rating = rating; // Update the route rating locally
+  
+    // Send the updated rating to the backend
+    this.http.put(`http://localhost:5000/api/routes/rate/${route._id}`, { rating })
+      .subscribe(
+        updatedRoute => console.log(`Itinéraire noté avec ${rating} étoiles`),
+        error => console.error('Erreur lors de la notation de l\'itinéraire :', error)
+      );
+  }
+  
 
   fetchBikeRoutes(email: string) {
     this.http.get<any[]>(`http://localhost:5000/api/routes/${email}`)
       .subscribe(routes => {
         this.bikeRoutes = routes;
+  
+        // Populate the ratings object based on the fetched routes
+        routes.forEach(route => {
+          this.ratings[route._id] = route.rating || 0; // Set to 0 if no rating exists
+        });
       }, error => {
         console.error('Erreur lors de la récupération des itinéraires :', error);
       });
   }
+  
   deleteRoute(routeId: string): void {
     this.http.delete(`http://localhost:5000/api/routes/delete/${routeId}`).subscribe(
       () => {

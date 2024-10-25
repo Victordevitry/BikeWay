@@ -13,7 +13,6 @@
           <br>
           <a (click)="deleteAccount()">Supprimer mon compte</a>
           <br>
-          <label for="switch">Thème sombre </label> <input class="" [checked]="isDarkTheme" type="checkbox" id="switch" name="switch" role="switch" (change)="switchTheme()">
         </article>
         <article class="inline artic">
           <header>
@@ -31,10 +30,21 @@
                 <a (click)="deleteRoute(route._id)">
                   Supprimer
                 </a>
-
+                
+                <!-- Star Rating -->
+                <div class="star-rating">
+                  <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                        (click)="setRating(route._id, star)"
+                        (mouseenter)="setHoveredRating(route._id, star)"
+                        (mouseleave)="clearHoveredRating(route._id)"
+                        [class.filled]="star <= (hoveredRatings[route._id] || ratings[route._id])">
+                    ★
+                  </span>
+                </div>
               </li>
             </ul>
           </div>
+          
           <ng-template #noRoutes>
             <p class="grey">Vous n'avez pas encore enregistré d'itinéraires.</p>
           </ng-template>
