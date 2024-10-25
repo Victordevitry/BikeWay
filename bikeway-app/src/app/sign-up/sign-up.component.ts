@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // Add this line
 import { Router } from '@angular/router'; // Add this line
 
+declare let toastr: any;
+
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -23,7 +25,7 @@ export class SignUpComponent {
     
     this.http.post('http://localhost:5000/api/user/register', user)
       .subscribe(response => {
-        console.log('User created:', response);
+        toastr.success('Your account was successfully created', 'Success');
         
         // Save user data to localStorage (or any other method) to simulate login
         localStorage.setItem('user', JSON.stringify(user));
@@ -31,7 +33,7 @@ export class SignUpComponent {
         // Redirect to the home page
         this.router.navigate(['/home']);
       }, error => {
-        console.error('Error creating user:', error);
+        toastr.error('There was an error creating your account', 'Error');
       });
   }
 }

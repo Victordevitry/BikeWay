@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Add this line
 import { HttpClientModule } from '@angular/common/http';
 
+declare let toastr: any;
+
 @Component({
   selector: 'app-log-in',
   standalone: true,
@@ -22,11 +24,10 @@ export class LogInComponent {
     const user = { email: this.email, password: this.password };
     this.http.post<any>('http://localhost:5000/api/user/login', user)
       .subscribe(response => {
-        console.log('Login successful:', response);
         localStorage.setItem('user', JSON.stringify(response.user));
         this.router.navigate(['/']);
       }, error => {
-        console.error('Login error:', error);
+        toastr.error('There was an error logging in : '+error, 'Error');
       });
   }
 }

@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+declare let toastr: any;
+
 
 @Component({
   selector: 'app-account',
@@ -40,7 +42,8 @@ export class AccountComponent {
     if (route) {
       this.rateRoute(route, rating);
     } else {
-      console.error('Route not found');
+      toastr.error('There was an error rating your route', 'Error');
+
     }
   }
   
@@ -59,8 +62,8 @@ export class AccountComponent {
     // Send the updated rating to the backend
     this.http.put(`http://localhost:5000/api/routes/rate/${route._id}`, { rating })
       .subscribe(
-        updatedRoute => console.log(`Itinéraire noté avec ${rating} étoiles`),
-        error => console.error('Erreur lors de la notation de l\'itinéraire :', error)
+        updatedRoute => toastr.success(`Itinerary rated with ${rating} stars`, 'Success'),
+        error => toastr.error(`There was an error rating your itinerary`, 'Error')
       );
   }
   
@@ -75,7 +78,7 @@ export class AccountComponent {
           this.ratings[route._id] = route.rating || 0; // Set to 0 if no rating exists
         });
       }, error => {
-        console.error('Erreur lors de la récupération des itinéraires :', error);
+        toastr.error(`There was an error fetching your savec itineraries`, 'Error')
       });
   }
   
@@ -83,10 +86,10 @@ export class AccountComponent {
     this.http.delete(`http://localhost:5000/api/routes/delete/${routeId}`).subscribe(
       () => {
         this.bikeRoutes = this.bikeRoutes.filter(route => route._id !== routeId);
-        console.log('Itinéraire supprimé avec succès');
+        toastr.success(`Itinerary successfully deleted`, 'Success');
       },
       (error) => {
-        console.error('Erreur lors de la suppression de l\'itinéraire :', error);
+        toastr.error(`There was an error deleting the itinerary`, 'Error')
       }
     );
   }
@@ -95,12 +98,12 @@ export class AccountComponent {
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
       this.http.delete(`http://localhost:5000/api/user/delete/${this.user.email}`).subscribe(
         () => {
-          console.log('Compte et itinéraires supprimés avec succès');
+          toastr.success(`Account and linked itineraries successfully deleted`, 'Success')
           localStorage.removeItem('user'); // Remove user data from local storage
           this.router.navigate(['/log-in']); // Redirect to the login page
         },
         (error) => {
-          console.error('Erreur lors de la suppression du compte :', error);
+          toastr.error(`There was an error deleting your account`, 'Error')
         }
       );
     }

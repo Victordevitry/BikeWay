@@ -5,6 +5,7 @@ import { Input } from '@angular/core';
 import { ThemeService } from '../theme-service.service';
 
 declare var google: any;
+declare let toastr: any;
 
 @Component({
   selector: 'app-map',
@@ -94,7 +95,7 @@ export class MapComponent implements AfterViewInit {
     const bounds = this.map.getBounds(); // Get the current map bounds
 
     if (!bounds) {
-      console.error('Bounds not available');
+      toastr.error('There was an error showing nearby bike stations', 'Error');
       return;
     }
 
@@ -114,7 +115,7 @@ export class MapComponent implements AfterViewInit {
           setTimeout(() => pagination.nextPage(), 1000); // Delay to avoid quota limit issues
         }
       } else {
-        console.error('Failed to fetch bike stations:', status);
+        toastr.error('There was an error showing nearby bike stations', 'Error');
       }
     });
   }
@@ -146,7 +147,7 @@ export class MapComponent implements AfterViewInit {
       if (status === 'OK') {
         this.directionsRenderer.setDirections(result);
       } else {
-        console.error('Error fetching directions', result);
+        toastr.error('There was an error showing the itinerary', 'Error');
       }
     });
   }
@@ -165,7 +166,7 @@ export class MapComponent implements AfterViewInit {
         (document.getElementById("end-adress") as HTMLInputElement).value = end.toString();
 
       } else {
-        console.error('Error fetching directions', result);
+        toastr.error('There was an error showing the itinerary', 'Error');
       }
     });
   }
@@ -183,14 +184,14 @@ export class MapComponent implements AfterViewInit {
             if (status === 'OK' && results[0]) {
               (document.getElementById("start-adress") as HTMLInputElement).value = results[0].formatted_address;
             } else {
-              console.error('Aucune adresse trouvée pour cette position:', status);
+              toastr.error('No address was found for your location', 'Error');
             }
           });
         }, (error) => {
-          console.error('Erreur lors de l\'obtention de la position:', error);
+          toastr.error('There was an error accessing your location', 'Error');
         });
       } else {
-        console.error('La géolocalisation n\'est pas supportée par ce navigateur.');
+        toastr.error('Your browser does not support this functionnality', 'Error');
       }
     } else {
       (document.getElementById("start-adress") as HTMLInputElement).value = '';
@@ -203,7 +204,7 @@ export class MapComponent implements AfterViewInit {
     const end = (document.getElementById("end-adress") as HTMLInputElement).value;
 
     if (!start || !end) {
-      console.error('Les champs d\'adresse de départ ou d\'arrivée sont vides.');
+      toastr.info('Please fill both start and end adress of your itinerary', 'Info');
       return;
     }
 
@@ -211,7 +212,7 @@ export class MapComponent implements AfterViewInit {
     if (userData) {
       this.user = JSON.parse(userData);
     } else {
-      console.log("user non trouvé, pas connecté?")
+      toastr.info('Please connect to your account to save this itinerary', 'Info');
       return;
     }
 
@@ -223,9 +224,9 @@ export class MapComponent implements AfterViewInit {
 
     this.http.post('http://localhost:5000/api/routes/save', route)
       .subscribe(response => {
-        console.log('Itinéraire enregistré avec succès !', response);
+        toastr.success('Itinerary successfully saved', 'Success');
       }, error => {
-        console.error('Erreur lors de l\'enregistrement de l\'itinéraire :', error);
+        toastr.error('There was an error saving the itinerary', 'Error');
       });
   }
 
