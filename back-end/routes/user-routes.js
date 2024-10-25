@@ -12,6 +12,7 @@ router.post('/save', async (req, res) => {
 
     res.status(200).send(route);
   } catch (err) {
+    console.log(err);
     res.status(500).send({ message: 'Erreur lors de l\'enregistrement' });
   }
 });

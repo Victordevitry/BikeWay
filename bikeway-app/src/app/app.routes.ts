@@ -6,10 +6,12 @@ import { LogInComponent } from './log-in/log-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthGuard } from './auth.guard';
 import { AccountComponent } from './account/account.component';
+import { ItineraryListComponent } from './itinerary-list/itinerary-list.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'a-propos', component: AProposComponent },
+    { path: 'itinerary-list', component: ItineraryListComponent },
     { path: 'log-in', component: LogInComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'contact', component: ContactComponent },

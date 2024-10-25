@@ -1,0 +1,63 @@
+
+
+.city-select {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    font-size: 16px;
+}
+
+.route-list {
+    margin-top: 20px;
+}
+
+.route-item {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.route-item:hover {
+    transform: translateY(-2px);
+}
+
+.route-title {
+    font-size: 18px;
+    color: #007bff;
+}
+
+.route-departure,
+.route-arrival {
+    font-weight: bold;
+}
+
+.route-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.route-link:hover {
+    background-color: #0056b3;
+}
+
+
+.fixed-size-image {
+    max-width: 500px; /* Set your desired width */
+    max-height: 350px; /* Set your desired height */
+    width: auto; /* Allow width to adjust */
+    height: auto; /* Allow height to adjust */
+    border-radius: 5px; /* Smooth corners */
+    margin-top: 10px; /* Space above image */
+    margin-bottom: 10px; /* Space below image */
+}
+
