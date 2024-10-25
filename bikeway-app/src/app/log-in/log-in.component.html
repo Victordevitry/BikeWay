@@ -1,19 +1,20 @@
-<div class="container" style="margin-top: 3%;width: 70%;">
+<div class="container" style="margin-top: 3%; width: 70%;">
         <article class="grid customedArticle">
-                <div class="loginContainer">
-                        <h1>Log in</h1>
-                        <p>Mail :</p>
-                        <input type="email" [(ngModel)]="email" placeholder="Enter mail" required>
-                        <p>Password :</p>
-                        <input type="password" [(ngModel)]="password" placeholder="Enter Password" required>
-                        <div class="grid">
-                                <button class="signUpInput" type="button" (click)="onLogin()">
-                                        Log in
-                                </button>
-                                <button class="signUpInput" type="button" routerLink="/sign-up">
-                                        Sign up
-                                </button>
-                        </div>
-                </div>
+            <div class="loginContainer">
+                <h1>Log in</h1>
+                <form (ngSubmit)="onLogin()">
+                    <p>Mail :</p>
+                    <input type="email" [(ngModel)]="email" placeholder="Enter mail" required name="email">
+                    
+                    <p>Password :</p>
+                    <input type="password" [(ngModel)]="password" placeholder="Enter Password" required name="password">
+                    
+                    <div class="grid">
+                        <button class="signUpInput" type="submit">Log in</button>
+                    </div>
+                    <p>Don't have an account?                         <a class="signUpInput" routerLink="/sign-up">Sign up</a></p>
+                </form>
+            </div>
         </article>
-</div>
+    </div>
+    

@@ -12,8 +12,8 @@
                 <div style="display: flex;align-items: center;">
                     <div style="width: 100%;">
                         <h4 class="route-title">{{ route.title }}</h4>
-                        <strong>Departure : </strong> <span class="route-departure">{{ route.departure }}</span><br>
-                        <strong>Arrival : </strong> <span class="route-arrival">{{ route.arrival }}</span><br>
+                        <strong>Departure: </strong> <span class="route-departure">{{ route.departure }}</span><br>
+                        <strong>Arrival: </strong> <span class="route-arrival">{{ route.arrival }}</span><br>
                         <p>{{ route.description }}</p>
                         <a [routerLink]="['/home']" [queryParams]="{ origin: route.departure, destination: route.arrival }" class="route-link">
                             View route on the map

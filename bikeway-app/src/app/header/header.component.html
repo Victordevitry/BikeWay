@@ -15,7 +15,7 @@
         <a class="menu-page" routerLink="/a-propos">About us</a>
       </li>
     </ul>
-    <ul>
+    <ul style="margin-right:1%">
       <li>
         <button (click)="toggleTheme()" class="theme-button">
           {{ isDarkTheme ? '🌞' : '🌙' }}
@@ -25,7 +25,7 @@
         <a class="menu-user" routerLink="/log-in">Log in</a>
       </li>
       <li *ngIf="isLoggedIn">
-        <a class="menu-user" routerLink="/account">Account</a>
+        <a class="menu-user" routerLink="/account">{{ username }}</a>
       </li>
     </ul>
   </nav>

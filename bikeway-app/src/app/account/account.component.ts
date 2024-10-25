@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms'; // Import FormsModule ici
 
 declare let toastr: any;
 
@@ -11,7 +12,7 @@ declare let toastr: any;
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule,HttpClientModule,RouterModule],
+  imports: [CommonModule,HttpClientModule,RouterModule,FormsModule],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
@@ -20,6 +21,8 @@ export class AccountComponent {
   bikeRoutes: any[] = [];
   ratings: { [key: string]: number } = {}; // Store ratings by route ID
   hoveredRatings: { [key: string]: number } = {}; // Store hovered ratings by route ID
+  addressType: string = 'home';
+  address: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -30,6 +33,27 @@ export class AccountComponent {
       this.fetchBikeRoutes(this.user.email);
     }
 
+    
+
+  }
+
+  saveAddress(): void {
+    // Structure des données à envoyer
+    const addressData = {
+      email:this.user.email,
+      type: this.addressType,
+      address: this.address,
+    };
+
+    // Requête HTTP POST pour envoyer les données
+    this.http.post('http://localhost:5000/api/user/saveAddress', addressData).subscribe(
+      response => {
+        toastr.success('Address saved successfully', "Success");
+      },
+      error => {
+        toastr.error('There was an error saving your address', "Error");
+      }
+    );
   }
 
   setRating(routeId: string, rating: number): void {
@@ -62,8 +86,8 @@ export class AccountComponent {
     // Send the updated rating to the backend
     this.http.put(`http://localhost:5000/api/routes/rate/${route._id}`, { rating })
       .subscribe(
-        updatedRoute => toastr.success(`Itinerary rated with ${rating} stars`, 'Success'),
-        error => toastr.error(`There was an error rating your itinerary`, 'Error')
+        updatedRoute => toastr.success(`Route rated with ${rating} stars`, 'Success'),
+        error => toastr.error(`There was an error rating your route`, 'Error')
       );
   }
   
@@ -86,10 +110,10 @@ export class AccountComponent {
     this.http.delete(`http://localhost:5000/api/routes/delete/${routeId}`).subscribe(
       () => {
         this.bikeRoutes = this.bikeRoutes.filter(route => route._id !== routeId);
-        toastr.success(`Itinerary successfully deleted`, 'Success');
+        toastr.success(`Route successfully deleted`, 'Success');
       },
       (error) => {
-        toastr.error(`There was an error deleting the itinerary`, 'Error')
+        toastr.error(`There was an error deleting the route`, 'Error')
       }
     );
   }

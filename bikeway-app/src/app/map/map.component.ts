@@ -24,6 +24,8 @@ export class MapComponent implements AfterViewInit {
   geocoder: any;
   user: any;
   bikeStations: any[] = [];
+  watchId: number | null = null;
+
   lightMapStyles: any = [
     { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#444444" }] },
     { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] },
@@ -85,6 +87,9 @@ export class MapComponent implements AfterViewInit {
 
   }
 
+
+
+
   setMapStyle(theme: string): void {
     const styles = theme === 'dark' ? this.darkMapStyles : this.lightMapStyles;
     this.map.setOptions({ styles });
@@ -112,7 +117,7 @@ export class MapComponent implements AfterViewInit {
 
         // Check if there are more results to load
         if (pagination.hasNextPage) {
-          setTimeout(() => pagination.nextPage(), 1000); // Delay to avoid quota limit issues
+          setTimeout(() => pagination.nextPage(), 200); // Delay to avoid quota limit issues
         }
       } else {
         toastr.error('There was an error showing nearby bike stations', 'Error');
@@ -147,7 +152,7 @@ export class MapComponent implements AfterViewInit {
       if (status === 'OK') {
         this.directionsRenderer.setDirections(result);
       } else {
-        toastr.error('There was an error showing the itinerary', 'Error');
+        toastr.error('There was an error showing the route', 'Error');
       }
     });
   }
@@ -166,7 +171,7 @@ export class MapComponent implements AfterViewInit {
         (document.getElementById("end-adress") as HTMLInputElement).value = end.toString();
 
       } else {
-        toastr.error('There was an error showing the itinerary', 'Error');
+        toastr.error('There was an error showing the route', 'Error');
       }
     });
   }
@@ -204,7 +209,7 @@ export class MapComponent implements AfterViewInit {
     const end = (document.getElementById("end-adress") as HTMLInputElement).value;
 
     if (!start || !end) {
-      toastr.info('Please fill both start and end adress of your itinerary', 'Info');
+      toastr.info('Please fill both start and end address of your route', 'Info');
       return;
     }
 
@@ -212,7 +217,7 @@ export class MapComponent implements AfterViewInit {
     if (userData) {
       this.user = JSON.parse(userData);
     } else {
-      toastr.info('Please connect to your account to save this itinerary', 'Info');
+      toastr.info('Please connect to your account to save this route', 'Info');
       return;
     }
 
@@ -224,9 +229,9 @@ export class MapComponent implements AfterViewInit {
 
     this.http.post('http://localhost:5000/api/routes/save', route)
       .subscribe(response => {
-        toastr.success('Itinerary successfully saved', 'Success');
+        toastr.success('Route successfully saved', 'Success');
       }, error => {
-        toastr.error('There was an error saving the itinerary', 'Error');
+        toastr.error('There was an error saving the route', 'Error');
       });
   }
 

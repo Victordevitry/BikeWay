@@ -17,10 +17,15 @@ export class SignUpComponent {
   email: string = '';
   password: string = '';
   username: string = '';
+  acceptedTerms: boolean = false; // Nouvelle variable pour le suivi des conditions acceptées
 
   constructor(private http: HttpClient, private router: Router) {} // Inject Router
 
   onSubmit() {
+    if (!this.acceptedTerms) {
+      alert("Veuillez accepter les conditions générales pour continuer.");
+      return;
+    }
     const user = { email: this.email, password: this.password, username: this.username };
     
     this.http.post('http://localhost:5000/api/user/register', user)

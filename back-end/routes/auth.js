@@ -45,6 +45,33 @@ router.post('/login', async (req, res) => {
     }
   });
 
+  router.post('/saveAddress', async (req, res) => {
+    try {
+      const { email, type, address } = req.body;
+  
+      if (!['home', 'work'].includes(type)) {
+        return res.status(400).json({ message: "Address type must be 'home' or 'work'" });
+      }
+  
+      const updateField = type === 'home' ? { homeAddress: address } : { workAddress: address };
+  
+      const updatedUser = await User.findOneAndUpdate(
+        { email },
+        { $set: updateField },
+        { new: true } // Option pour renvoyer le document mis à jour
+      );
+  
+      if (updatedUser) {
+        res.status(200).json({ message: 'Address updated successfully', user: updatedUser });
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      console.error('Error updating address:', error);
+      res.status(500).json({ message: 'Error updating address', error });
+    }
+  });
+
   router.delete('/delete/:email', async (req, res) => {
     const email = req.params.email;
   
