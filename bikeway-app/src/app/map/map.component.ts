@@ -144,34 +144,72 @@ export class MapComponent implements AfterViewInit {
       if (status === 'OK') {
         this.directionsRenderer.setDirections(result);
 
-        
         const startLocation = result.routes[0].legs[0].start_location;
         const endLocation = result.routes[0].legs[0].end_location;
 
-        // Marker for start location
+        // Add markers for start and end points
         const markerBegin = new google.maps.Marker({
           position: startLocation,
           map: this.map,
-          icon: 'https://img.icons8.com/color/50/marker--v1.png', // Change this URL to your desired icon
+          icon: 'https://img.icons8.com/color/50/marker--v1.png',
           title: 'Start Location',
         });
-
         this.markers.push(markerBegin);
 
-        // Marker for end location
         const markerEnd = new google.maps.Marker({
           position: endLocation,
           map: this.map,
-          icon: 'https://img.icons8.com/color/50/marker--v1.png', // Change this URL to your desired icon
+          icon: 'https://img.icons8.com/color/50/marker--v1.png',
           title: 'End Location',
         });
         this.markers.push(markerEnd);
 
+        // Clear any existing info box in TOP_CENTER position
+        this.map.controls[google.maps.ControlPosition.TOP_CENTER].clear();
+
+        // Get elevation at start and end points
+        const path = [startLocation, endLocation];
+        const elevationService = new google.maps.ElevationService();
+
+        elevationService.getElevationForLocations({ locations: path }, (results: string | any[], status: any) => {
+          if (status === google.maps.ElevationStatus.OK && results.length > 1) {
+            const startElevation = results[0].elevation;
+            const endElevation = results[1].elevation;
+            const elevationDifference = endElevation - startElevation;
+
+            // Create an info box with the elevation data
+            const infoDiv = document.createElement('div');
+            infoDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            infoDiv.style.padding = '20px';
+            infoDiv.style.border = '1px solid #000';
+            infoDiv.style.borderRadius = '5px';
+            infoDiv.style.marginTop = '10px';
+            infoDiv.style.fontSize = '18px';
+            infoDiv.style.opacity = '1 !important';
+            infoDiv.style.color = 'black';
+
+            infoDiv.innerHTML = `
+                        <div style='color:#000080'><strong>Route Details:</strong><br></div>
+                        Duration: ${result.routes[0].legs[0].duration.text}<br>
+                        Distance: ${result.routes[0].legs[0].distance.text}<br>
+                        Elevation Difference: ${elevationDifference.toFixed(2)} meters
+                    `;
+
+            // Add the new info box to the TOP_CENTER position
+            this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(infoDiv);
+          } else {
+            toastr.error('Failed to retrieve elevation data', 'Error');
+          }
+        });
       } else {
-        toastr.error('There was an error showing the route', 'Error');
+        toastr.info('Please fill both start and end address to show the route', 'Info');
       }
     });
   }
+
+
+
+
 
   showRouteFromSavedItinerary(start: String, end: String): void {
     const request = {
@@ -227,13 +265,12 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
-
   saveRoute(): void {
     const start = (document.getElementById("start-adress") as HTMLInputElement).value;
     const end = (document.getElementById("end-adress") as HTMLInputElement).value;
 
     if (!start || !end) {
-      toastr.info('Please fill both start and end address of your route', 'Info');
+      toastr.info('Please show first the route on the map to be able to save it', 'Info');
       return;
     }
 
