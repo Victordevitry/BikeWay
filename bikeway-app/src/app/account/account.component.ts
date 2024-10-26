@@ -49,6 +49,27 @@ export class AccountComponent implements AfterViewInit{
     }
   }
 
+  shareRoute(route: any) {
+    const shareData = {
+      title: 'Check out my bike route!',
+      text: `From: ${route.origin} To: ${route.destination}`,
+      url: `http://localhost:4200/home?origin=${encodeURIComponent(route.origin)}&destination=${encodeURIComponent(route.destination)}` // Replace with your app's URL
+    };
+  
+    if (navigator.share) {
+      navigator.share(shareData)
+        .then(() => {
+          toastr.success('Route shared successfully!', 'Success');
+        })
+        .catch((error) => {
+          toastr.error('There was an error sharing the route', 'Error');
+        });
+    } else {
+      toastr.info('Sharing is not supported on this browser.', 'Info');
+    }
+  }
+  
+
   convertToLocalTime(utcDate: string): string {
     const localDate = new Date(utcDate);
     return localDate.toLocaleString(); // Adjust the formatting as needed

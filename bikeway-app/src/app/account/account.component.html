@@ -25,8 +25,8 @@
         <br>
         <p><strong>Home Address:</strong> {{ user.homeAddress || 'Not provided' }}</p>
         <p><strong>Work Address:</strong> {{ user.workAddress || 'Not provided' }}</p>
-        
-      
+
+
         <p>There is no news on your account yet</p>
         <div class="flex-row">
           <a class="account-buttons" (click)="logout()">Log out</a>
@@ -58,6 +58,8 @@
                     [queryParams]="{ origin: route.origin, destination: route.destination }">
                     View route
                   </a>
+                  <br>
+                  <a class="account-buttons" (click)="shareRoute(route)">Share</a> <!-- Add this line -->
                   <br>
                   <a class="account-buttons" (click)="deleteRoute(route._id)">
                     Delete

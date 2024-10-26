@@ -12,13 +12,13 @@
         <a class="menu-page" routerLink="/popular-routes">Popular routes</a>
       </li>
       <li>
-        <a class="menu-page" routerLink="/a-propos">About us</a>
+        <a class="menu-page" routerLink="/about">About us</a>
       </li>
     </ul>
     <ul style="margin-right:1%">
       <li>
         <button (click)="toggleTheme()" class="theme-button">
-          {{ isDarkTheme ? '🌞' : '🌙' }}
+          <img width="35" height="35" src="{{ isDarkTheme ? 'https://img.icons8.com/ios-filled/35/FFFFFF/sun--v1.png' : 'https://img.icons8.com/sf-regular-filled/003366/35/moon-symbol.png' }}" alt="user-male-circle"/>
         </button>
       </li>
       <li *ngIf="!isLoggedIn">

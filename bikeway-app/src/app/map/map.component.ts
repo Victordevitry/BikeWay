@@ -27,26 +27,199 @@ export class MapComponent implements AfterViewInit {
   watchId: number | null = null;
 
   lightMapStyles: any = [
-    { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#444444" }] },
-    { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] },
-    { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-    { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] },
-    { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] },
-    { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
-    { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-    { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#46bcec" }, { "visibility": "on" }] }
+    {
+      "featureType": "all",
+      "elementType": "labels.text",
+      "stylers": [
+        {
+          "color": "#878787"
+        }
+      ]
+    },
+    {
+      "featureType": "all",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#f9f5ed"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#c9c9c9"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#aee0f4"
+        }
+      ]
+    }
   ];
   
   darkMapStyles: any = [
-    { "featureType": "all", "elementType": "all", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": -30 }] },
-    { "featureType": "all", "elementType": "labels.text.fill", "stylers": [{ "color": "#ffffff" }] },
-    { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "color": "#353535" }] },
-    { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "color": "#656565" }] },
-    { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "color": "#505050" }] },
-    { "featureType": "poi", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }] },
-    { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#454545" }] },
-    { "featureType": "transit", "elementType": "labels", "stylers": [{ "hue": "#000000" }, { "saturation": 100 }, { "lightness": -40 }, { "invert_lightness": true }, { "gamma": 1.5 }] }
-  ];
+    {
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 13
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#144b53"
+            },
+            {
+                "lightness": 14
+            },
+            {
+                "weight": 1.4
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#08304b"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#0c4152"
+            },
+            {
+                "lightness": 5
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#0b434f"
+            },
+            {
+                "lightness": 25
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#0b3d51"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#146474"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#021019"
+            }
+        ]
+    }
+];
   
   constructor(private http: HttpClient, private themeService: ThemeService) { }
 
@@ -125,37 +298,40 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  // Method to display bike stations on the map
   displayBikeStations(): void {
     this.bikeStations.forEach((station) => {
-      if (station.geometry && station.geometry.location) {
-        new google.maps.Marker({
-          position: station.geometry.location,
-          map: this.map,
-          title: station.name,
-        });
-      }
+        if (station.geometry && station.geometry.location) {
+            new google.maps.Marker({
+                position: station.geometry.location,
+                map: this.map,
+                icon: 'https://img.icons8.com/ultraviolet/40/bicycle.png', // Directly using the URL for bike station icon
+                title: station.name,
+            });
+        }
     });
-  }
+}
 
-  calculateRoute(): void {
+calculateRoute(): void {
     const start = (document.getElementById("start-adress") as HTMLInputElement).value;
     const end = (document.getElementById("end-adress") as HTMLInputElement).value;
 
     const request = {
-      origin: start,
-      destination: end,
-      travelMode: google.maps.TravelMode.BICYCLING,
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.BICYCLING,
     };
 
     this.directionsService.route(request, (result: any, status: any) => {
-      if (status === 'OK') {
-        this.directionsRenderer.setDirections(result);
-      } else {
-        toastr.error('There was an error showing the route', 'Error');
-      }
+        if (status === 'OK') {
+            this.directionsRenderer.setDirections(result);
+        } else {
+            toastr.error('There was an error showing the route', 'Error');
+        }
     });
-  }
+}
+
+
+
 
   showRouteFromSavedItinerary(start: String, end: String): void {
     const request = {
