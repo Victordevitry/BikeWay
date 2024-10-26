@@ -31,17 +31,36 @@ export class AccountComponent implements AfterViewInit{
     const input = document.getElementById("address") as HTMLInputElement;
 
     const autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (place && place.formatted_address) {
+        this.address = place.formatted_address; // Set the full address
+      }
+    });
+
   }
 
   ngOnInit() {
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
+      this.getUserData();
       this.fetchBikeRoutes(this.user.email);
     }
+  }
 
-    
+  getUserData() {
+    const userEmail = this.user.email;
 
+    this.http.get(`http://localhost:5000/api/user/${userEmail}`)
+      .subscribe(
+        (response: any) => {
+          this.user = response.user;
+        },
+        (error) => {
+          toastr.error('There was an error fetching user data', "Error");
+        }
+      );
   }
 
   saveAddress(): void {
@@ -56,6 +75,7 @@ export class AccountComponent implements AfterViewInit{
     this.http.post('http://localhost:5000/api/user/saveAddress', addressData).subscribe(
       response => {
         toastr.success('Address saved successfully', "Success");
+        this.getUserData();
       },
       error => {
         toastr.error('There was an error saving your address', "Error");
