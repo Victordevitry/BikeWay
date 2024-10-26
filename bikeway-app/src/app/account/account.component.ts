@@ -26,6 +26,8 @@ export class AccountComponent implements AfterViewInit{
   address: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  
   
   ngAfterViewInit(): void {
     const input = document.getElementById("address") as HTMLInputElement;
@@ -41,12 +43,33 @@ export class AccountComponent implements AfterViewInit{
   }
 
   ngOnInit() {
+    this.setToastrOptions();
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
       this.getUserData();
       this.fetchBikeRoutes(this.user.email);
     }
+  }
+
+  private setToastrOptions() {
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1500',
+      timeOut: '1500', // Duration to display each toast
+      extendedTimeOut: '1500',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut'
+    };
   }
 
   shareRoute(route: any) {
@@ -58,9 +81,7 @@ export class AccountComponent implements AfterViewInit{
   
     if (navigator.share) {
       navigator.share(shareData)
-        .then(() => {
-          toastr.success('Route shared successfully!', 'Success');
-        })
+        .then(() => {})
         .catch((error) => {
           toastr.error('There was an error sharing the route', 'Error');
         });

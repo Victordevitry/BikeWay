@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // Add this line
 import { Router } from '@angular/router'; // Add this line
 import { CommonModule } from '@angular/common';
+
 declare let toastr: any;
 
 @Component({
@@ -21,6 +22,30 @@ export class SignUpComponent {
 
   constructor(private http: HttpClient, private router: Router) {} // Inject Router
 
+  ngOnInit() {
+    this.setToastrOptions();
+  }
+
+  private setToastrOptions() {
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1500',
+      timeOut: '1500', // Duration to display each toast
+      extendedTimeOut: '1500',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut'
+    };
+  }
+
   onSubmit() {
     if (!this.acceptedTerms) {
       alert("Veuillez accepter les conditions générales pour continuer.");
@@ -36,7 +61,7 @@ export class SignUpComponent {
         localStorage.setItem('user', JSON.stringify(user));
         
         // Redirect to the home page
-        this.router.navigate(['/log-in']);
+        this.router.navigate(['/account']);
       }, error => {
         toastr.error('There was an error creating your account, the email address might already be used', 'Error');
       });

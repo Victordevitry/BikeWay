@@ -20,6 +20,30 @@ export class LogInComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  ngOnInit() {
+    this.setToastrOptions();
+  }
+
+  private setToastrOptions() {
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1500',
+      timeOut: '1500', // Duration to display each toast
+      extendedTimeOut: '1500',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut'
+    };
+  }
+
   onLogin() {
     if (!this.email || !this.password) {
       toastr.info('Please fill both mail and password inputs', 'Info');

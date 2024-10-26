@@ -33,6 +33,30 @@ export class MapComponent implements AfterViewInit {
 
   constructor(private http: HttpClient, private themeService: ThemeService) { }
 
+  ngOnInit() {
+    this.setToastrOptions();
+  }
+
+  private setToastrOptions() {
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1500',
+      timeOut: '1500', // Duration to display each toast
+      extendedTimeOut: '1500',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut'
+    };
+  }
+
   ngAfterViewInit(): void {
     this.initMap();
     // Subscribe to theme changes

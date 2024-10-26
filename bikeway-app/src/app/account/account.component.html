@@ -4,30 +4,39 @@
       <article style="width:80%;margin:auto">
         <header>
           <h2>
-            Hello, <div style="display: inline-block;color:#3F72AF"> {{user.username}}</div>
+            Hello, <div style="display: inline-block;color:#71e9d1"> {{user.username}}</div>
           </h2>
 
         </header>
-        <div class="address-form" style="display: flex;align-items: center;justify-content: center;">
-          <div style="width: 50%;">
+        <div class="address-form" style="display: flex;align-items: center;justify-content: space-evenly;align-content: center;">
+          <div>
             <label for="addressType">Address Type:</label>
             <select id="addressType" [(ngModel)]="addressType">
               <option value="home">Home</option>
               <option value="work">Work</option>
             </select>
           </div>
-          <div style="width: 120%;margin-left:10%">
+          <div style="margin-left:10%">
             <label for="address">Address:</label>
             <input type="text" id="address" [(ngModel)]="address" placeholder="Enter your address" />
+            
           </div>
+          <div>
+            <div style="color:transparent">Action</div>
+            <button type="button" (click)="saveAddress()">Save Address</button>
+
+          </div>
+
         </div>
-        <button type="button" (click)="saveAddress()">Save Address</button>
         <br>
-        <p><strong>Home Address:</strong> {{ user.homeAddress || 'Not provided' }}</p>
-        <p><strong>Work Address:</strong> {{ user.workAddress || 'Not provided' }}</p>
+        <div style="display: flex;align-items: center;justify-content: space-evenly;width: 100%;">
+          <p><strong>Home Address:</strong> {{ user.homeAddress || 'Not provided' }}</p>
+          <p><strong>Work Address:</strong> {{ user.workAddress || 'Not provided' }}</p>
+        </div>
+        
 
         <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
-        <p>There is no news on your account yet</p>
+        <p style="text-align: center;">There is no news on your account yet</p>
         <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
         <div class="flex-row">
           <a class="account-buttons" (click)="logout()">Log out</a>
