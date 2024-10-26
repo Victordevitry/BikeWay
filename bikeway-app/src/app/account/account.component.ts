@@ -49,6 +49,11 @@ export class AccountComponent implements AfterViewInit{
     }
   }
 
+  convertToLocalTime(utcDate: string): string {
+    const localDate = new Date(utcDate);
+    return localDate.toLocaleString(); // Adjust the formatting as needed
+  }
+
   getUserData() {
     const userEmail = this.user.email;
 

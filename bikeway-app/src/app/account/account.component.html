@@ -44,7 +44,7 @@
                 <div>
                   <strong>From:</strong> {{ route.origin }} <br>
                   <strong>To:</strong> {{ route.destination }} <br>
-                  <strong>Saved on:</strong> {{ route.createdAt | date:'medium' }}
+                  <strong>Saved on:</strong> {{ convertToLocalTime(route.createdAt) }}
                 </div>
                 <div>
                   <div class="star-rating">

@@ -19,10 +19,11 @@
     margin: 10px 0;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
+    list-style: none;
 }
 
 .route-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
 }
 
 .route-title {
@@ -49,8 +50,8 @@
 
 
 .fixed-size-image {
-    max-width: 500px; /* Set your desired width */
-    max-height: 350px; /* Set your desired height */
+    max-width: 550px; /* Set your desired width */
+    max-height: 400px; /* Set your desired height */
     width: auto; /* Allow width to adjust */
     height: auto; /* Allow height to adjust */
     border-radius: 5px; /* Smooth corners */

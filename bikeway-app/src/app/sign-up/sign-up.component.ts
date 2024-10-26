@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // Add this line
 import { Router } from '@angular/router'; // Add this line
-
+import { CommonModule } from '@angular/common';
 declare let toastr: any;
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [HttpClientModule,FormsModule],
+  imports: [HttpClientModule,FormsModule,CommonModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
