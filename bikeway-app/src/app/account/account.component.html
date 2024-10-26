@@ -26,8 +26,9 @@
         <p><strong>Home Address:</strong> {{ user.homeAddress || 'Not provided' }}</p>
         <p><strong>Work Address:</strong> {{ user.workAddress || 'Not provided' }}</p>
 
-
+        <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
         <p>There is no news on your account yet</p>
+        <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
         <div class="flex-row">
           <a class="account-buttons" (click)="logout()">Log out</a>
           <a class="account-buttons" (click)="deleteAccount()">Delete my account</a>
@@ -66,7 +67,9 @@
                   </a>
                 </div>
               </div>
+              <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
             </li>
+            
           </ul>
         </div>
         <ng-template #noRoutes>
