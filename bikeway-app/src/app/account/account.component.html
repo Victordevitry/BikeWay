@@ -23,12 +23,11 @@
         </div>
         <button type="button" (click)="saveAddress()">Save Address</button>
         <br>
-        <h3>Saved Addresses</h3>
         <p><strong>Home Address:</strong> {{ user.homeAddress || 'Not provided' }}</p>
         <p><strong>Work Address:</strong> {{ user.workAddress || 'Not provided' }}</p>
-        <br>
-        <br>
-        <p class="grey">There is no news on your account</p>
+        
+      
+        <p>There is no news on your account yet</p>
         <div class="flex-row">
           <a class="account-buttons" (click)="logout()">Log out</a>
           <a class="account-buttons" (click)="deleteAccount()">Delete my account</a>

@@ -21,13 +21,17 @@ export class LogInComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   onLogin() {
+    if (!this.email || !this.password) {
+      toastr.info('Please fill both mail and password inputs', 'Info');
+      return; // Stop execution if validation fails
+    }
     const user = { email: this.email, password: this.password };
     this.http.post<any>('http://localhost:5000/api/user/login', user)
       .subscribe(response => {
         localStorage.setItem('user', JSON.stringify(response.user));
         this.router.navigate(['/']);
       }, error => {
-        toastr.error('There was an error logging in : '+error, 'Error');
+        toastr.info('Invalid mail or password', 'Info');
       });
   }
 }

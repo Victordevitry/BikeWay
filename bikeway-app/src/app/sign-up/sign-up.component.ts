@@ -36,9 +36,9 @@ export class SignUpComponent {
         localStorage.setItem('user', JSON.stringify(user));
         
         // Redirect to the home page
-        this.router.navigate(['/home']);
+        this.router.navigate(['/log-in']);
       }, error => {
-        toastr.error('There was an error creating your account', 'Error');
+        toastr.error('There was an error creating your account, the email address might already be used', 'Error');
       });
   }
 }

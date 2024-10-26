@@ -9,7 +9,7 @@
         </strong>
       </li>
       <li>
-        <a class="menu-page" routerLink="/itinerary-list">Famous itineraries</a>
+        <a class="menu-page" routerLink="/popular-routes">Popular routes</a>
       </li>
       <li>
         <a class="menu-page" routerLink="/a-propos">About us</a>
@@ -25,7 +25,9 @@
         <a class="menu-user" routerLink="/log-in">Log in</a>
       </li>
       <li *ngIf="isLoggedIn">
-        <a class="menu-user" routerLink="/account">{{ username }}</a>
+        <a class="menu-user" routerLink="/account">
+          <img width="35" height="35" src="{{ isDarkTheme ? 'https://img.icons8.com/material-sharp/35/FFFFFF/user-male-circle.png' : 'https://img.icons8.com/material-rounded/35/003366/user-male-circle.png' }}" alt="user-male-circle"/>
+        </a>
       </li>
     </ul>
   </nav>

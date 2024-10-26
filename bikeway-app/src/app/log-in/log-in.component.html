@@ -3,16 +3,16 @@
             <div class="loginContainer">
                 <h1>Log in</h1>
                 <form (ngSubmit)="onLogin()">
-                    <p>Mail :</p>
+                    <p style="margin-bottom:1% !important">Mail :</p>
                     <input type="email" [(ngModel)]="email" placeholder="Enter mail" required name="email">
                     
-                    <p>Password :</p>
+                    <p style="margin-bottom:1% !important">Password :</p>
                     <input type="password" [(ngModel)]="password" placeholder="Enter Password" required name="password">
                     
                     <div class="grid">
                         <button class="signUpInput" type="submit">Log in</button>
                     </div>
-                    <p>Don't have an account?                         <a class="signUpInput" routerLink="/sign-up">Sign up</a></p>
+                    <p>Don't have an account? <a class="signUpInput" routerLink="/sign-up">Sign up</a></p>
                 </form>
             </div>
         </article>

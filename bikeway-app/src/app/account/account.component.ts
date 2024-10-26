@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Import FormsModule ici
 
 declare let toastr: any;
+declare var google: any;
 
 
 @Component({
@@ -16,7 +17,7 @@ declare let toastr: any;
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
-export class AccountComponent {
+export class AccountComponent implements AfterViewInit{
   user: any;
   bikeRoutes: any[] = [];
   ratings: { [key: string]: number } = {}; // Store ratings by route ID
@@ -25,6 +26,12 @@ export class AccountComponent {
   address: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
+  
+  ngAfterViewInit(): void {
+    const input = document.getElementById("address") as HTMLInputElement;
+
+    const autocomplete = new google.maps.places.Autocomplete(input);
+  }
 
   ngOnInit() {
     const userData = localStorage.getItem('user');
@@ -86,7 +93,7 @@ export class AccountComponent {
     // Send the updated rating to the backend
     this.http.put(`http://localhost:5000/api/routes/rate/${route._id}`, { rating })
       .subscribe(
-        updatedRoute => toastr.success(`Route rated with ${rating} stars`, 'Success'),
+        updatedRoute => toastr.info(`Route rated with ${rating} stars`, 'Info'),
         error => toastr.error(`There was an error rating your route`, 'Error')
       );
   }
@@ -135,6 +142,6 @@ export class AccountComponent {
 
   logout() {
     localStorage.removeItem('user'); // Remove user data from local storage
-    this.router.navigate(['/log-in']); // Redirect to the login page
+    this.router.navigate(['/home']); // Redirect to the login page
   }
 }

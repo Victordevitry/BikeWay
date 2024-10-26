@@ -11,11 +11,13 @@ import { ItineraryListComponent } from './itinerary-list/itinerary-list.componen
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'a-propos', component: AProposComponent },
-    { path: 'itinerary-list', component: ItineraryListComponent },
+    { path: 'popular-routes', component: ItineraryListComponent },
     { path: 'log-in', component: LogInComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'account', component: AccountComponent, canActivate:[AuthGuard] },
-    { path: '', redirectTo: '/home', pathMatch: 'full' }
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '**', redirectTo: '/home' } 
+
   ];
   
