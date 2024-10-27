@@ -2,6 +2,14 @@
     vertical-align: middle;    
 }
 
+
+.select-address{
+    width:25%;
+    padding:3px !important;
+    padding-left:10px !important;
+
+}
+
 .icons-search{
     text-decoration: none;
     cursor: pointer;

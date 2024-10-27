@@ -3,17 +3,44 @@
         <div class="container-fluid inp">
             <p>Starting address</p>
             <input type="text" id="start-adress" placeholder="Paris" />
-            <p>Use my location <input class="searchInput" type="checkbox" id="switch" name="switch" role="switch" (change)="toggleLocation()"></p>
+            
+            <div *ngIf="isLoggedIn && (homeAddress || workAddress)">
+                <div style="display: flex;">Use my 
+                    <select id="select-departure" (change)="uncheckDepartureSwitch()" class="select-address">
+                        <option *ngIf="homeAddress" [value]="homeAddress">Home</option>
+                        <option *ngIf="workAddress" [value]="workAddress">Work</option>
+                    </select> address
+                    <input class="searchInput" type="checkbox" id="switch-departure" name="switch-departure" role="switch"
+                    (change)="useDepartureAddress()">
+                </div>
+              
+
+            </div>
+            <p>Use my location <input class="searchInput" type="checkbox" id="switch" name="switch" role="switch"
+                (change)="toggleLocation()"></p>
+            
+
         </div>
         <div class="container-fluid inp">
             <p>Destination address</p>
             <input placeholder="Orléans" id="end-adress" type="text" />
+            <div *ngIf="isLoggedIn && (homeAddress || workAddress)">
+                <div style="display: flex;">Use my 
+                    <select id="select-arrival" (change)="uncheckArrivalSwitch()" class="select-address">
+                        <option *ngIf="homeAddress" [value]="homeAddress">Home</option>
+                        <option *ngIf="workAddress" [value]="workAddress">Work</option>
+                    </select> address
+                    <input class="searchInput" type="checkbox" id="switch-arrival" name="switch-arrival" role="switch"
+                    (change)="useArrivalAddress()">
+                </div>
+            
+            </div>
         </div>
         <div class="grid inline">
             <a id="search-route" class="icons-search">
                 Show route
             </a>
-            
+
             <a class="icons-search" (click)="saveRoute()">
                 Save route
             </a>

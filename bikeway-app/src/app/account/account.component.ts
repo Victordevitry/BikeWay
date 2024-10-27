@@ -24,7 +24,6 @@ export class AccountComponent implements AfterViewInit{
   hoveredRatings: { [key: string]: number } = {}; // Store hovered ratings by route ID
   addressType: string = 'home';
   address: string = '';
-
   constructor(private http: HttpClient, private router: Router) {}
 
   
@@ -47,7 +46,6 @@ export class AccountComponent implements AfterViewInit{
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
-      this.getUserData();
       this.fetchBikeRoutes(this.user.email);
     }
   }
@@ -96,19 +94,7 @@ export class AccountComponent implements AfterViewInit{
     return localDate.toLocaleString(); // Adjust the formatting as needed
   }
 
-  getUserData() {
-    const userEmail = this.user.email;
-
-    this.http.get(`http://localhost:5000/api/user/${userEmail}`)
-      .subscribe(
-        (response: any) => {
-          this.user = response.user;
-        },
-        (error) => {
-          toastr.error('There was an error fetching user data', "Error");
-        }
-      );
-  }
+  
 
   saveAddress(): void {
     // Structure des données à envoyer
@@ -122,7 +108,19 @@ export class AccountComponent implements AfterViewInit{
     this.http.post('http://localhost:5000/api/user/saveAddress', addressData).subscribe(
       response => {
         toastr.success('Address saved successfully', "Success");
-        this.getUserData();
+        // Récupérer l'utilisateur depuis le localStorage
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        // Mettre à jour l'adresse work ou home dans l'objet utilisateur
+        if (this.addressType === 'home') {
+          user.homeAddress = this.address;
+        } else if (this.addressType === 'work') {
+          user.workAddress = this.address;
+        }
+
+        // Sauvegarder l'utilisateur mis à jour dans le localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        this.user=user;
       },
       error => {
         toastr.error('There was an error saving your address', "Error");

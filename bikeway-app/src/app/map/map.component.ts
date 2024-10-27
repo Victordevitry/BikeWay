@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Input } from '@angular/core';
 import { ThemeService } from '../theme-service.service';
+import { CommonModule } from '@angular/common';
 
 declare var google: any;
 declare let toastr: any;
@@ -10,7 +11,7 @@ declare let toastr: any;
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule,CommonModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
@@ -24,8 +25,10 @@ export class MapComponent implements AfterViewInit {
   geocoder: any;
   user: any;
   bikeStations: any[] = [];
-  watchId: number | null = null;
   markers: any[] = []; // Array to hold markers
+  homeAddress: string='';
+  workAddress: string='';
+  isLoggedIn: boolean = false;
 
   lightMapStyles: any = [{ "featureType": "all", "elementType": "labels.text", "stylers": [{ "color": "#878787" }] }, { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f9f5ed" }] }, { "featureType": "road.highway", "elementType": "all", "stylers": [{ "color": "#f5f5f5" }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "color": "#c9c9c9" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#aee0f4" }] }];
 
@@ -35,7 +38,67 @@ export class MapComponent implements AfterViewInit {
 
   ngOnInit() {
     this.setToastrOptions();
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData);
+      this.isLoggedIn = true;
+      this.homeAddress=this.user.homeAddress;
+      this.workAddress=this.user.workAddress;
+    }
   }
+
+  uncheckDepartureSwitch(){
+    const switchElement = document.getElementById('switch-departure') as HTMLInputElement;
+    if (switchElement) {
+      switchElement.checked = false;
+    }
+  }
+
+  uncheckArrivalSwitch(){
+    const switchElement = document.getElementById('switch-arrival') as HTMLInputElement;
+    if (switchElement) {
+      switchElement.checked = false;
+    }
+  }
+
+  useArrivalAddress() {
+    // Récupérer l'élément select pour l'adresse de départ
+    const selectElement = document.getElementById('select-arrival') as HTMLSelectElement;
+
+    // Vérifier que l'élément existe et a une valeur
+    if (selectElement && selectElement.value) {
+        const selectedAddress = selectElement.value;
+
+        // Mettre à jour l'input de départ avec l'adresse sélectionnée
+        const startAddressInput = document.getElementById('end-adress') as HTMLInputElement;
+        if (startAddressInput) {
+            startAddressInput.value = selectedAddress;
+        }
+    }
+}
+
+
+useDepartureAddress() {
+  const switchLocation = document.getElementById('switch') as HTMLInputElement;
+    if (switchLocation) {
+      switchLocation.checked = false;
+    }
+  // Récupérer l'élément select pour l'adresse de départ
+  const selectElement = document.getElementById('select-departure') as HTMLSelectElement;
+
+  // Vérifier que l'élément existe et a une valeur
+  if (selectElement && selectElement.value) {
+      const selectedAddress = selectElement.value;
+
+      // Mettre à jour l'input de départ avec l'adresse sélectionnée
+      const startAddressInput = document.getElementById('start-adress') as HTMLInputElement;
+      if (startAddressInput) {
+          startAddressInput.value = selectedAddress;
+      }
+  }
+}
+
+
 
   private setToastrOptions() {
     toastr.options = {
@@ -303,6 +366,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   toggleLocation(): void {
+    this.uncheckDepartureSwitch();
     const switchElement = document.getElementById("switch") as HTMLInputElement;
     if (switchElement.checked) {
       if (navigator.geolocation) {
@@ -346,10 +410,8 @@ export class MapComponent implements AfterViewInit {
       return;
     }
 
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      this.user = JSON.parse(userData);
-    } else {
+    
+    if (!this.user) {
       toastr.info('Please connect to your account to save this route', 'Info');
       return;
     }

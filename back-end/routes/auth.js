@@ -49,6 +49,7 @@ router.post('/login', async (req, res) => {
 });
 
 // In your backend API routes file
+/*
 router.get('/:email', async (req, res) => {
   const { email } = req.params;
 
@@ -65,7 +66,7 @@ router.get('/:email', async (req, res) => {
   }
 });
 
-
+*/
 
 
 router.post('/saveAddress', async (req, res) => {
