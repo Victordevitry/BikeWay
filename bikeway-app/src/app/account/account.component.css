@@ -21,3 +21,39 @@
   align-items: center;
 }
 
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: none ;
+  box-shadow: none; 
+
+}
+
+.tooltiptext {
+  visibility: hidden;
+  background-color: #646262;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: -30%; /* Position au-dessus du bouton */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  width: auto;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+

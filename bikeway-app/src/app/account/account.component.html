@@ -56,7 +56,7 @@
                   <strong>To:</strong> {{ route.destination }} <br>
                   <strong>Saved on:</strong> {{ convertToLocalTime(route.createdAt) }}
                 </div>
-                <div>
+                <div style="text-align: center;display:flex;justify-content: space-between;margin-top:10px;width:50%" >
                   <div class="star-rating">
                     <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setRating(route._id, star)"
                       (mouseenter)="setHoveredRating(route._id, star)" (mouseleave)="clearHoveredRating(route._id)"
@@ -66,13 +66,14 @@
                   </div>
                   <a class="account-buttons" [routerLink]="['/home']"
                     [queryParams]="{ origin: route.origin, destination: route.destination }">
-                    Show route on map
+                    <img width="45" height="45" src="https://img.icons8.com/color/45/track-order.png" alt="Show route"/>
                   </a>
                   <br>
-                  <a class="account-buttons" (click)="shareRoute(route)">Share</a> <!-- Add this line -->
+                  <a class="account-buttons" (click)="shareRoute(route)"><img width="40" height="40" src="https://img.icons8.com/color/40/share--v1.png" alt="Share route"/>
+                  </a> <!-- Add this line -->
                   <br>
                   <a class="account-buttons" (click)="deleteRoute(route._id)">
-                    Delete
+                    <img width="40" height="40" src="https://img.icons8.com/color/40/delete-sign--v1.png" alt="Delete route"/>
                   </a>
                 </div>
               </div>
