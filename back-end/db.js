@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
+
+const dbUrl = process.env.DATABASE_URL;
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://admin:NQSF2xwehPTkmtXE@bikewaycluster.5lqpq.mongodb.net/?retryWrites=true&w=majority&appName=BikeWayCluster', {
+    await mongoose.connect(dbUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
