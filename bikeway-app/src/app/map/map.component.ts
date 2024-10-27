@@ -162,9 +162,6 @@ useDepartureAddress() {
     const startAutocomplete = new google.maps.places.Autocomplete(startInput);
     const endAutocomplete = new google.maps.places.Autocomplete(endInput);
 
-    const searchButton = document.getElementById('search-route');
-    searchButton?.addEventListener('click', () => this.calculateRoute());
-
     // Set initial style based on the current theme
     this.setMapStyle(this.themeService.getTheme());
 
