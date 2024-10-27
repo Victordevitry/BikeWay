@@ -2,7 +2,7 @@ body {
     position: relative;
     min-height: 100vh;
     margin: 0;
-    padding-bottom: 0; /* Hauteur du footer pour éviter le chevauchement */
+    padding-bottom: 0;
 }
 
 .toast {

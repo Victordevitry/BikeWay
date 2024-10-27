@@ -11,22 +11,21 @@ import { ThemeService } from '../theme-service.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements AfterViewInit {
-   isLoggedIn: boolean = false;
-  isDarkTheme: boolean = false;
-  username: string | null = null; // Nouvelle propriété pour stocker le nom d'utilisateur
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef, private themeService: ThemeService) {}
+export class HeaderComponent implements AfterViewInit {
+  isLoggedIn: boolean = false;
+  isDarkTheme: boolean = false;
+  username: string | null = null;
+
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private themeService: ThemeService) { }
 
   ngAfterViewInit(): void {
     this.isDarkTheme = this.themeService.getTheme() === 'dark';
     this.checkLoginStatus();
-
     this.themeService.theme$.subscribe(theme => {
       this.isDarkTheme = theme === 'dark';
       this.cdr.detectChanges();
     });
-
     this.router.events.subscribe(() => {
       this.checkLoginStatus();
     });
@@ -38,9 +37,8 @@ export class HeaderComponent implements AfterViewInit {
 
   checkLoginStatus(): void {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
-    this.isLoggedIn = !!userData && Object.keys(userData).length > 0; // Vérifier si l'objet est vide
-    this.username = this.isLoggedIn ? userData?.username : 'Account'; // Si l'utilisateur est connecté, obtenir le nom d'utilisateur
+    this.isLoggedIn = !!userData && Object.keys(userData).length > 0;
+    this.username = this.isLoggedIn ? userData?.username : 'Account';
     this.cdr.detectChanges();
   }
-  
 }

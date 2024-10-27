@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; // Add this line
-import { Router } from '@angular/router'; // Add this line
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router'; 
 import { CommonModule } from '@angular/common';
 
 declare let toastr: any;
@@ -14,36 +14,21 @@ declare let toastr: any;
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
+
 export class SignUpComponent {
   email: string = '';
   password: string = '';
   username: string = '';
-  acceptedTerms: boolean = false; // Nouvelle variable pour le suivi des conditions acceptées
+  acceptedTerms: boolean = false; 
 
-  constructor(private http: HttpClient, private router: Router) {} // Inject Router
+  constructor(private http: HttpClient, private router: Router) {} 
 
   ngOnInit() {
     this.setToastrOptions();
   }
 
   private setToastrOptions() {
-    toastr.options = {
-      closeButton: true,
-      debug: false,
-      newestOnTop: false,
-      progressBar: true,
-      positionClass: 'toast-top-right',
-      preventDuplicates: false,
-      onclick: null,
-      showDuration: '300',
-      hideDuration: '1500',
-      timeOut: '1500', // Duration to display each toast
-      extendedTimeOut: '1500',
-      showEasing: 'swing',
-      hideEasing: 'linear',
-      showMethod: 'fadeIn',
-      hideMethod: 'fadeOut'
-    };
+    toastr.options = { closeButton: true, debug: false, newestOnTop: false, progressBar: true, positionClass: 'toast-top-right', preventDuplicates: false, onclick: null, showDuration: '300', hideDuration: '1500', timeOut: '1500', extendedTimeOut: '1500', showEasing: 'swing', hideEasing: 'linear', showMethod: 'fadeIn', hideMethod: 'fadeOut' };
   }
 
   onSubmit() {
@@ -52,15 +37,10 @@ export class SignUpComponent {
       return;
     }
     const user = { email: this.email, password: this.password, username: this.username };
-    
     this.http.post('http://localhost:5000/api/user/register', user)
       .subscribe(response => {
         toastr.success('Your account was successfully created', 'Success');
-        
-        // Save user data to localStorage (or any other method) to simulate login
         localStorage.setItem('user', JSON.stringify(user));
-        
-        // Redirect to the home page
         this.router.navigate(['/account']);
       }, error => {
         toastr.error('There was an error creating your account, the email address might already be used', 'Error');

@@ -6,7 +6,6 @@
           <h2 style="display:flex;justify-content:left;margin-bottom:0;left:0;">
             Hello,<div style="display: inline-block;color:#71e9d1"> {{user.username}} &nbsp;<img width="45" height="45" src="https://img.icons8.com/emoji/40/waving-hand-emoji.png" alt="Waving"/></div>
           </h2>
-
         </header>
         <div class="address-form" style="display: flex;align-items: center;justify-content: space-evenly;align-content: center;">
           <div>
@@ -18,23 +17,18 @@
           </div>
           <div style="margin-left:10%">
             <label for="address">Address:</label>
-            <input type="text" id="address" [(ngModel)]="address" placeholder="Enter your address" />
-            
+            <input type="text" id="address" [(ngModel)]="address" placeholder="Enter your address" />          
           </div>
           <div>
             <div style="color:transparent">Action</div>
             <button type="button" (click)="saveAddress()">Save Address</button>
-
           </div>
-
         </div>
         <br>
         <div style="display: flex;align-items: center;justify-content: space-evenly;width: 100%;">
           <p><strong>Home Address:</strong> {{ user.homeAddress || 'Not provided' }}</p>
           <p><strong>Work Address:</strong> {{ user.workAddress || 'Not provided' }}</p>
         </div>
-        
-
         <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
         <p style="text-align: center;">There is no news on your account yet</p>
         <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
@@ -70,7 +64,7 @@
                   </a>
                   <br>
                   <a class="account-buttons" (click)="shareRoute(route)"><img width="40" height="40" src="https://img.icons8.com/color/40/share--v1.png" alt="Share route"/>
-                  </a> <!-- Add this line -->
+                  </a>
                   <br>
                   <a class="account-buttons" (click)="deleteRoute(route._id)">
                     <img width="40" height="40" src="https://img.icons8.com/color/40/delete-sign--v1.png" alt="Delete route"/>
@@ -79,7 +73,6 @@
               </div>
               <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
             </li>
-            
           </ul>
         </div>
         <ng-template #noRoutes>

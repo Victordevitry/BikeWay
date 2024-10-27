@@ -5,15 +5,12 @@
 
 .brand-logo{
      width: 200px;
-
 }
-
 
 .menu-page{
     text-decoration: none;
     cursor: pointer;
 }
-
 
 .menu-user:hover{
     text-decoration: none;
@@ -25,4 +22,3 @@
     border:none !important;
     box-shadow: none;
 }
-

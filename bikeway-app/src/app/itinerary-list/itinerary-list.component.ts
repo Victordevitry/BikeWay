@@ -17,9 +17,10 @@ interface Itinerary {
   templateUrl: './itinerary-list.component.html',
   styleUrl: './itinerary-list.component.css'
 })
+
 export class ItineraryListComponent {
   cities = ['Paris', 'Barcelona'];
-  selectedCity: string = this.cities[0]; // Default to Paris
+  selectedCity: string = this.cities[0];
   routes: { [key: string]: Itinerary[] } = {
     Paris: [
       {
