@@ -226,7 +226,7 @@ useDepartureAddress() {
         const marker = new google.maps.Marker({
           position: station.geometry.location,
           map: this.map,
-          icon: 'https://img.icons8.com/arcade/50/bicycle.png', // Directly using the URL for bike station icon
+          icon: 'https://img.icons8.com/external-flaticons-lineal-color-flat-icons/50/external-bike-summer-travel-flaticons-lineal-color-flat-icons-2.png', // Directly using the URL for bike station icon
           title: station.name,
         });
         this.markers.push(marker);
