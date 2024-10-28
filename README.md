@@ -37,6 +37,7 @@ Bikeway: Your biking companion for seamless route planning and sharing.
 - **Route Saving, Rating, and Sharing**: If logged in, you can save any routes displayed on the integrated map. On your account page, you can rate these routes and share them with friends.
 - **User Account Management**: Sign up, log in, and manage your account information.
 - **Popular Biking Routes**: Discover popular biking routes in your city (currently available for Barcelona and Paris) on the integrated map.
+- **Dark/Light theme**: Change the theme of the web application with a button in the header
 - **Location Sharing**: Access your device's location to facilitate easier route planning.
 - **Address Autocomplete**: Enjoy address autocompletion for a better user experience.
 
