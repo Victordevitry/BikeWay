@@ -4,6 +4,8 @@ Bikeway: Your biking companion for seamless route planning and sharing.
 
 **Current Access Link**: [bikeway-bucket.s3-website.eu-west-3.amazonaws.com](http://bikeway-bucket.s3-website.eu-west-3.amazonaws.com)
 
+**Warning**: Some features, like accessing your device's location and sharing routes, require HTTPS. I'm currently working on obtaining an SSL certificate and a custom domain name. These should be set up in a few days.
+
 ## Table of Contents
 - [Pages](#pages)
 - [Features](#features)
