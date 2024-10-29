@@ -13,6 +13,7 @@ Bikeway: Your biking companion for seamless route planning and sharing.
 - **Interactive Map**: Access an interactive map integrated within the web application.
 - **Bike Route Information**: Search for bike routes using a start and end address to obtain information about the route.
 - **Route Saving, Rating, and Sharing**: If logged in, you can save any routes displayed on the integrated map. On your account page, you can rate these routes and share them with friends.
+- **Adaptative display**: The display of the web application adapts to the size of the screen to allow easy phone and laptop use.
 - **User Account Management**: Sign up, log in, and manage your account information. You can also set up a home and/or a work address to easily use them in the route search.
 - **Popular Biking Routes**: Discover popular biking routes in your city (currently available for Barcelona and Paris) on the integrated map.
 - **Dark/Light theme**: Change the theme of the web application with a button in the header
