@@ -35,7 +35,7 @@ export class LogInComponent {
       return;
     }
     const user = { email: this.email, password: this.password };
-    this.http.post<any>('http://localhost:5000/api/user/login', user)
+    this.http.post<any>('https://api.bikeway-victor.pro/api/user/login', user)
       .subscribe(response => {
         localStorage.setItem('user', JSON.stringify(response.user));
         this.router.navigate(['/']);

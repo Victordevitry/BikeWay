@@ -9,15 +9,18 @@
         <h3>Popular cycling routes for {{ selectedCity }}:</h3>
         <ul>
             <li *ngFor="let route of selectedRoutes" class="route-item">
-                <div style="display: flex;align-items: center;">
+                <div class="popular-route" >
                     <div style="width: 100%;">
                         <h4 class="route-title">{{ route.title }}</h4>
                         <strong>Departure: </strong> <span class="route-departure">{{ route.departure }}</span><br>
                         <strong>Arrival: </strong> <span class="route-arrival">{{ route.arrival }}</span><br>
                         <p style="width:90%">{{ route.description }}</p>
-                        <a [routerLink]="['/home']" [queryParams]="{ origin: route.departure, destination: route.arrival }" class="route-link">
-                            View route on the map
-                        </a>
+                        <div style="text-align: center;">
+                            <a [routerLink]="['/home']" [queryParams]="{ origin: route.departure, destination: route.arrival }" class="route-link">
+                                View route on the map
+                            </a>
+                        </div>
+                       
                     </div>
                     <img [src]="route.image" alt="{{ route.title }}" class="fixed-size-image" />
                 </div>

@@ -7,3 +7,31 @@
     align-items: center;
     justify-content: space-around;
 }
+
+.login-super-container{
+    margin-top:4%;
+    width: 70%;
+}
+
+@media (max-width: 1500px) {
+    .login-super-container{
+        margin-top:6%;
+        width: 80%;
+    }
+}
+
+
+@media (max-width: 1000px) {
+    .login-super-container{
+        margin-top:15%;
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .login-super-container{
+        margin-top:30%;
+        width: 100%;
+    }
+}

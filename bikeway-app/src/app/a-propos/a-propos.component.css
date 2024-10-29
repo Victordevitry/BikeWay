@@ -7,8 +7,7 @@
 }
 
 .aboutContainer{
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 3%;
 }
 
 .margin-flex{   
@@ -18,4 +17,26 @@
     align-items: center ;
     align-content: center;
     justify-content: center;
+    text-align: justify;
+}
+
+.item1 {
+    order: 1;
+}
+
+.item2 {
+    order: 2;
+}
+
+@media (max-width: 1050px) {
+    .margin-flex{   
+        flex-direction: column;
+        margin-top:7%;
+    }
+    .item1 {
+        order: 2; 
+    }
+    .item2 {
+        order: 1; 
+    } 
 }

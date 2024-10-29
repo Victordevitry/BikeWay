@@ -96,3 +96,31 @@
 .inline {
     display: flex;
 }
+
+.mw {
+    max-width: none;
+}
+
+.map-button-container {
+    padding-left: 0 !important;
+}
+
+@media (max-width: 1250px) {
+    .select-address {
+        width: 100px;
+        background: none;
+    }
+    .map-container {
+        min-height: 800px !important;
+    }
+    #map {
+        min-height: 800px !important;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .mw {
+        max-width: 35px;
+    }
+}

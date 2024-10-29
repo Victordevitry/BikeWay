@@ -37,7 +37,7 @@ export class SignUpComponent {
       return;
     }
     const user = { email: this.email, password: this.password, username: this.username };
-    this.http.post('http://localhost:5000/api/user/register', user)
+    this.http.post('https://api.bikeway-victor.pro/api/user/register', user)
       .subscribe(response => {
         toastr.success('Your account was successfully created', 'Success');
         localStorage.setItem('user', JSON.stringify(user));

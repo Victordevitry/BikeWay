@@ -7,21 +7,21 @@
             Hello,<div style="display: inline-block;color:#71e9d1"> {{user.username}} &nbsp;<img width="45" height="45" src="https://img.icons8.com/emoji/40/waving-hand-emoji.png" alt="Waving"/></div>
           </h2>
         </header>
-        <div class="address-form" style="display: flex;align-items: center;justify-content: space-evenly;align-content: center;">
-          <div>
+        <div class="address-form">
+          <div class="save-address-inputs">
             <label for="addressType">Address Type:</label>
             <select id="addressType" [(ngModel)]="addressType">
               <option value="home">Home</option>
               <option value="work">Work</option>
             </select>
           </div>
-          <div style="margin-left:10%">
+          <div class="save-address-inputs" style="margin-left:10%">
             <label for="address">Address:</label>
             <input type="text" id="address" [(ngModel)]="address" placeholder="Enter your address" />          
           </div>
-          <div>
+          <div class="save-address-button">
             <div style="color:transparent">Action</div>
-            <button type="button" (click)="saveAddress()">Save Address</button>
+            <button  type="button" (click)="saveAddress()">Save Address</button>
           </div>
         </div>
         <br>
@@ -32,9 +32,9 @@
         <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
         <p style="text-align: center;">There is no news on your account yet</p>
         <hr [ngStyle]="{ 'background-color': 'lightgrey', 'height': '2px', 'border': 'none'}" />
-        <div class="flex-row">
-          <a class="account-buttons" (click)="logout()">Log out</a>
-          <a class="account-buttons" (click)="deleteAccount()">Delete my account</a>
+        <div class="flex-row-actions">
+          <a class="account-actions" (click)="logout()">Log out</a>
+          <a class="account-actions" (click)="deleteAccount()">Delete my account</a>
         </div>
       </article>
       <article style="width:70%;margin:auto;margin-top:3%;margin-bottom:1.5%;">
@@ -45,12 +45,12 @@
           <ul>
             <li *ngFor="let route of bikeRoutes" style="list-style: none;">
               <div class="flex-row" style="justify-content: space-between;margin-top:10px">
-                <div style="width:50%">
+                <div class="route-description">
                   <strong>From:</strong> {{ route.origin }} <br>
                   <strong>To:</strong> {{ route.destination }} <br>
                   <strong>Saved on:</strong> {{ convertToLocalTime(route.createdAt) }}
                 </div>
-                <div style="text-align: center;display:flex;justify-content: space-between;margin-top:10px;width:50%" >
+                <div class="route-description" style="text-align: center;display:flex;justify-content: space-between;margin-top:10px;" >
                   <div class="star-rating">
                     <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setRating(route._id, star)"
                       (mouseenter)="setHoveredRating(route._id, star)" (mouseleave)="clearHoveredRating(route._id)"

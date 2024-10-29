@@ -52,9 +52,9 @@ export class AccountComponent implements AfterViewInit {
 
   shareRoute(route: any) {
     const shareData = {
-      title: 'Check out my bike route!',
+      title: 'Check out my bike route on BikeWay!',
       text: `From: ${route.origin} To: ${route.destination}`,
-      url: `http://localhost:4200/home?origin=${encodeURIComponent(route.origin)}&destination=${encodeURIComponent(route.destination)}`
+      url: `https://www.bikeway-victor.pro/home?origin=${encodeURIComponent(route.origin)}&destination=${encodeURIComponent(route.destination)}`
     };
     if (navigator.share) {
       navigator.share(shareData)
@@ -80,7 +80,7 @@ export class AccountComponent implements AfterViewInit {
       address: this.address,
     };
 
-    this.http.post('http://localhost:5000/api/user/saveAddress', addressData).subscribe(
+    this.http.post('https://api.bikeway-victor.pro/api/user/saveAddress', addressData).subscribe(
       response => {
         toastr.success('Address saved successfully', "Success");
         const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -118,7 +118,7 @@ export class AccountComponent implements AfterViewInit {
 
   rateRoute(route: any, rating: number): void {
     route.rating = rating;
-    this.http.put(`http://localhost:5000/api/routes/rate/${route._id}`, { rating })
+    this.http.put(`https://api.bikeway-victor.pro/api/routes/rate/${route._id}`, { rating })
       .subscribe(
         updatedRoute => toastr.info(`Route rated with ${rating} stars`, 'Info'),
         error => toastr.error(`There was an error rating your route`, 'Error')
@@ -126,7 +126,7 @@ export class AccountComponent implements AfterViewInit {
   }
 
   fetchBikeRoutes(email: string) {
-    this.http.get<any[]>(`http://localhost:5000/api/routes/${email}`)
+    this.http.get<any[]>(`https://api.bikeway-victor.pro/api/routes/${email}`)
       .subscribe(routes => {
         this.bikeRoutes = routes;
         routes.forEach(route => {
@@ -138,7 +138,7 @@ export class AccountComponent implements AfterViewInit {
   }
 
   deleteRoute(routeId: string): void {
-    this.http.delete(`http://localhost:5000/api/routes/delete/${routeId}`).subscribe(
+    this.http.delete(`https://api.bikeway-victor.pro/api/routes/delete/${routeId}`).subscribe(
       () => {
         this.bikeRoutes = this.bikeRoutes.filter(route => route._id !== routeId);
         toastr.success(`Route successfully deleted`, 'Success');
@@ -151,7 +151,7 @@ export class AccountComponent implements AfterViewInit {
 
   deleteAccount(): void {
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-      this.http.delete(`http://localhost:5000/api/user/delete/${this.user.email}`).subscribe(
+      this.http.delete(`https://api.bikeway-victor.pro/api/user/delete/${this.user.email}`).subscribe(
         () => {
           toastr.success(`Account and linked routes successfully deleted`, 'Success')
           localStorage.removeItem('user');

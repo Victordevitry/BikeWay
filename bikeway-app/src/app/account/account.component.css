@@ -13,7 +13,20 @@
   text-decoration: none;
 }
 
-.flex-row{
+.account-actions{
+  cursor: pointer;
+  text-decoration: none;
+  margin-top:3%;
+}
+
+.flex-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.flex-row-actions {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -27,8 +40,8 @@
   text-decoration: none;
   cursor: pointer;
   background-color: transparent;
-  border: none ;
-  box-shadow: none; 
+  border: none;
+  box-shadow: none;
 }
 
 .tooltiptext {
@@ -55,3 +68,47 @@
   opacity: 1;
 }
 
+.address-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+.route-description{
+  width: 50%;
+}
+
+@media (max-width: 1050px) {
+  .address-form{
+    flex-direction: column;
+    
+    justify-content: space-evenly;
+  }
+  .save-address-inputs{
+    align-items:baseline !important;
+  }
+
+  .save-address-button{
+    align-items: center !important;
+  }
+
+  .flex-row{
+    flex-direction: column;
+  }
+
+  .route-description{
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .star-rating span {
+    font-size: 15px;
+  }
+
+  .account-buttons{
+    width: 15%;
+  }
+  
+}
