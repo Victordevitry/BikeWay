@@ -46,6 +46,15 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  onPlaceSelected(): void {
+    // Vérifie si les deux adresses sont renseignées
+    const start = (document.getElementById("start-adress") as HTMLInputElement).value;
+    const end = (document.getElementById("end-adress") as HTMLInputElement).value;
+    if (start && end) {
+      this.calculateRoute(start, end);
+    }
+  }
+
   uncheckDepartureSwitch() {
     const switchElement = document.getElementById('switch-departure') as HTMLInputElement;
     if (switchElement) {
@@ -67,6 +76,7 @@ export class MapComponent implements AfterViewInit {
       const startAddressInput = document.getElementById('end-adress') as HTMLInputElement;
       if (startAddressInput) {
         startAddressInput.value = selectedAddress;
+        this.onPlaceSelected();
       }
     }
   }
@@ -82,6 +92,7 @@ export class MapComponent implements AfterViewInit {
       const startAddressInput = document.getElementById('start-adress') as HTMLInputElement;
       if (startAddressInput) {
         startAddressInput.value = selectedAddress;
+        this.onPlaceSelected();
       }
     }
   }
@@ -102,6 +113,7 @@ export class MapComponent implements AfterViewInit {
       endInput.value = this.destination;
       this.calculateRoute(this.origin, this.destination);
     }
+    
   }
 
   initMap(): void {
@@ -120,6 +132,10 @@ export class MapComponent implements AfterViewInit {
     const endInput = document.getElementById("end-adress") as HTMLInputElement;
     const startAutocomplete = new google.maps.places.Autocomplete(startInput);
     const endAutocomplete = new google.maps.places.Autocomplete(endInput);
+
+    startAutocomplete.addListener('place_changed', () => this.onPlaceSelected());
+    endAutocomplete.addListener('place_changed', () => this.onPlaceSelected());
+
     this.setMapStyle(this.themeService.getTheme());
   }
 
@@ -171,7 +187,7 @@ export class MapComponent implements AfterViewInit {
         const marker = new google.maps.Marker({
           position: station.geometry.location,
           map: this.map,
-          icon: 'https://img.icons8.com/external-flaticons-lineal-color-flat-icons/50/external-bike-summer-travel-flaticons-lineal-color-flat-icons-2.png',
+          icon: 'https://img.icons8.com/ios/50/3498db/marker-b.png',
           title: station.name,
         });
         this.markers.push(marker);
@@ -207,7 +223,7 @@ export class MapComponent implements AfterViewInit {
         const markerEnd = new google.maps.Marker({
           position: endLocation,
           map: this.map,
-          icon: 'https://img.icons8.com/color/50/marker--v1.png',
+          icon: 'https://img.icons8.com/ios-filled/50/228BE6/marker.png',
           title: 'End Location',
         });
         this.markers.push(markerEnd);
@@ -295,6 +311,7 @@ export class MapComponent implements AfterViewInit {
           this.geocoder.geocode({ location: { lat, lng } }, (results: { formatted_address: string; }[], status: string) => {
             if (status === 'OK' && results[0]) {
               (document.getElementById("start-adress") as HTMLInputElement).value = results[0].formatted_address;
+              this.onPlaceSelected();
             } else {
               toastr.error('No address was found for your location', 'Error');
             }

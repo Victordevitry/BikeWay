@@ -16,6 +16,9 @@ export class HeaderComponent implements AfterViewInit {
   isLoggedIn: boolean = false;
   isDarkTheme: boolean = false;
   username: string | null = null;
+  isMenuOpen: boolean = false;
+
+
 
   constructor(private router: Router, private cdr: ChangeDetectorRef, private themeService: ThemeService) { }
 
@@ -29,6 +32,14 @@ export class HeaderComponent implements AfterViewInit {
     this.router.events.subscribe(() => {
       this.checkLoginStatus();
     });
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
   }
 
   toggleTheme(): void {

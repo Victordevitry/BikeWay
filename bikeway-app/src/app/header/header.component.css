@@ -28,14 +28,48 @@
     min-height:30px !important;
 }
 
-@media (max-width: 600px) {
+.burger-button{
+    display: none;
+    background-color: transparent;
+    border:1px solid var(--pico-primary);
+    color:var(--pico-primary) !important;
+}
 
-    .menu-page{
-      font-size: 14px;
+.hide-menu{
+    display: inline;
+}
+
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    opacity: 1;
+    background-color: var(--pico-background-color);
+    top: 50px;
+    right: 10px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border: 1px solid;
+    border-radius: 5px;
+  }
+  
+  .dropdown-menu a, .dropdown-menu button {
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+@media (max-width: 768px) {
+
+    .burger-button{
+        display: inline;
     }
 
-    .menu-user{
-        font-size: 14px;
-      }
+    .hide-menu{
+        display: none;
+    }
     
 }
+
+

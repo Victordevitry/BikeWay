@@ -8,27 +8,47 @@
           </a>
         </strong>
       </li>
-      <li>
+      <li class="hide-menu">
         <a class="menu-page" routerLink="/popular-routes">Popular routes</a>
       </li>
-      <li>
+      <li class="hide-menu">
         <a class="menu-page" routerLink="/about">About us</a>
       </li>
     </ul>
     <ul style="margin-right:1%">
-      <li>
+      <li class="hide-menu">
         <button (click)="toggleTheme()" class="theme-button">
           <img class="header-logo" width="35" height="35" src="{{ isDarkTheme ? 'https://img.icons8.com/ios-filled/35/FFFFFF/sun--v1.png' : 'https://img.icons8.com/sf-regular-filled/003366/35/moon-symbol.png' }}" alt="user-male-circle"/>
         </button>
       </li>
-      <li *ngIf="!isLoggedIn">
+      <li *ngIf="!isLoggedIn" class="hide-menu">
         <a class="menu-user" routerLink="/log-in">Log in</a>
       </li>
-      <li *ngIf="isLoggedIn">
+      <li *ngIf="isLoggedIn" class="hide-menu">
         <a class="menu-user" routerLink="/account">
           <img class="header-logo" width="35" height="35" src="{{ isDarkTheme ? 'https://img.icons8.com/material-sharp/35/FFFFFF/user-male-circle.png' : 'https://img.icons8.com/material-rounded/35/003366/user-male-circle.png' }}" alt="user-male-circle"/>
         </a>
       </li>
+      <li>
+        <button class="burger-button" (click)="toggleMenu()">
+          &#9776; 
+        </button>
+      </li>
+      
     </ul>
+    <div *ngIf="isMenuOpen" class="dropdown-menu">
+      <a class="menu-item" routerLink="/popular-routes" (click)="closeMenu()">Popular Routes</a>
+      <a class="menu-item" routerLink="/about" (click)="closeMenu()">About Us</a>
+      <a (click)="toggleTheme()" class="theme-button">
+        Change theme
+        <img class="header-logo" width="35" height="35" src="{{ isDarkTheme ? 'https://img.icons8.com/ios-filled/35/FFFFFF/sun--v1.png' : 'https://img.icons8.com/sf-regular-filled/003366/35/moon-symbol.png' }}" alt="theme-toggle"/>
+       
+      </a>
+      <a *ngIf="!isLoggedIn" class="menu-item" routerLink="/log-in" (click)="closeMenu()">Log in</a>
+      <a *ngIf="isLoggedIn" class="menu-item" routerLink="/account" (click)="closeMenu()">
+        Account
+        <img class="header-logo" width="35" height="35" src="{{ isDarkTheme ? 'https://img.icons8.com/material-sharp/35/FFFFFF/user-male-circle.png' : 'https://img.icons8.com/material-rounded/35/003366/user-male-circle.png' }}" alt="user"/>
+      </a>
+    </div>
   </nav>
 </div>
